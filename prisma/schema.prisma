@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  username   String   @unique
+  password   String
+  name       String
+  role       String   @default("user")
+  phone      String?
+  isApproved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  author    String
+  date      String
+  views     Int      @default(0)
+  boardType String   
+  isNotice  Boolean  @default(false)
+  image     String?
+  fileData  String?
+  fileName  String?
+  fileType  String?
+  createdAt DateTime @default(now())
+}
+
+model Gallery {
+  id        Int      @id @default(autoincrement())
+  title     String
+  image     String
+  date      String
+  author    String
+  views     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Popup {
+  id        Int      @id @default(autoincrement())
+  image     String
+  link      String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model History {
+  id        Int      @id @default(autoincrement())
+  year      String
+  month     String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  id         Int      @id @default(autoincrement())
+  key        String   @unique
+  value      String
+  updatedAt  DateTime @updatedAt
+}
