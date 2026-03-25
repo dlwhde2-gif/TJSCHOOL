@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState, useEffect, Suspense } from 'react'
 import SubPageLayout from '@/components/SubPageLayout'
 import { Save, X, Image as ImageIcon, Loader2 } from 'lucide-react'
@@ -23,7 +23,7 @@ const BoardWriteContent = ({ mainCategory, subCategory, navItems }) => {
     const savedUser = localStorage.getItem('user')
     if (savedUser) setUser(JSON.parse(savedUser))
     else {
-      window.alert('로그인이 필요합니다.')
+      window.alert('濡쒓렇?몄씠 ?꾩슂?⑸땲??')
       router.push('/login')
     }
   }, [])
@@ -48,7 +48,7 @@ const BoardWriteContent = ({ mainCategory, subCategory, navItems }) => {
 
   const handleSave = async (e) => {
     e.preventDefault()
-    if (!formData.title || !formData.content) return window.alert('제목과 내용을 입력해주세요.')
+    if (!formData.title || !formData.content) return window.alert('?쒕ぉ怨??댁슜???낅젰?댁＜?몄슂.')
     
     setIsLoading(true)
     const supabase = getSupabase()
@@ -102,10 +102,10 @@ const BoardWriteContent = ({ mainCategory, subCategory, navItems }) => {
 
       if (saveError) throw saveError
 
-      window.alert('작성되었습니다.')
+      window.alert('?묒꽦?섏뿀?듬땲??')
       router.back()
     } catch (err) {
-      window.alert('저장 실패: ' + err.message)
+      window.alert('????ㅽ뙣: ' + err.message)
     } finally {
       setIsLoading(false)
     }
@@ -115,16 +115,16 @@ const BoardWriteContent = ({ mainCategory, subCategory, navItems }) => {
     <SubPageLayout mainCategory={mainCategory} subCategory={subCategory} navItems={navItems}>
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-[40px] shadow-2xl p-8 md:p-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8">{editId ? '글 수정하기' : '글쓰기'}</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-8">{editId ? '湲 ?섏젙?섍린' : '湲?곌린'}</h2>
           <form onSubmit={handleSave} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 ml-4">제목</label>
+              <label className="text-sm font-bold text-gray-700 ml-4">?쒕ぉ</label>
               <input 
                 type="text" 
                 value={formData.title}
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
                 className="w-full px-8 py-4 bg-gray-50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl outline-none transition-all text-xl font-bold"
-                placeholder="제목을 입력하세요"
+                placeholder="?쒕ぉ???낅젰?섏꽭??
               />
             </div>
 
@@ -137,12 +137,12 @@ const BoardWriteContent = ({ mainCategory, subCategory, navItems }) => {
                   onChange={(e) => setFormData({...formData, isNotice: e.target.checked})}
                   className="w-5 h-5 accent-primary"
                 />
-                <label htmlFor="isNotice" className="text-sm font-bold text-gray-700">중요 공지사항으로 등록</label>
+                <label htmlFor="isNotice" className="text-sm font-bold text-gray-700">以묒슂 怨듭??ы빆?쇰줈 ?깅줉</label>
               </div>
             )}
 
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 ml-4">파일 첨부</label>
+              <label className="text-sm font-bold text-gray-700 ml-4">?뚯씪 泥⑤?</label>
               <div className="relative group">
                 <input 
                   type="file" 
@@ -157,19 +157,19 @@ const BoardWriteContent = ({ mainCategory, subCategory, navItems }) => {
                 >
                   <div className="flex flex-col items-center">
                     <ImageIcon size={48} className="text-gray-300 group-hover:text-primary transition-colors mb-4" />
-                    <span className="text-gray-500 font-medium">{imageFile ? imageFile.name : '파일을 선택하세요 (모든 형식 가능)'}</span>
+                    <span className="text-gray-500 font-medium">{imageFile ? imageFile.name : '?뚯씪???좏깮?섏꽭??(紐⑤뱺 ?뺤떇 媛??'}</span>
                   </div>
                 </label>
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 ml-4">내용</label>
+              <label className="text-sm font-bold text-gray-700 ml-4">?댁슜</label>
               <textarea 
                 value={formData.content}
                 onChange={(e) => setFormData({...formData, content: e.target.value})}
                 className="w-full px-8 py-6 bg-gray-50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl outline-none transition-all min-h-[400px] resize-none leading-relaxed"
-                placeholder="내용을 입력하세요..."
+                placeholder="?댁슜???낅젰?섏꽭??.."
               />
             </div>
 
@@ -179,7 +179,7 @@ const BoardWriteContent = ({ mainCategory, subCategory, navItems }) => {
                 onClick={() => router.back()}
                 className="flex-1 py-4 px-6 rounded-2xl border-2 border-gray-100 font-bold text-gray-500 hover:bg-gray-50 transition-all flex items-center justify-center"
               >
-                <X size={20} className="mr-2" /> 취소
+                <X size={20} className="mr-2" /> 痍⑥냼
               </button>
               <button 
                 type="submit"
@@ -187,7 +187,7 @@ const BoardWriteContent = ({ mainCategory, subCategory, navItems }) => {
                 className="flex-[2] py-4 px-6 rounded-2xl bg-primary text-white font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] flex items-center justify-center disabled:opacity-50"
               >
                 {isLoading ? <Loader2 className="animate-spin mr-2" /> : <Save size={20} className="mr-2" />}
-                저장하기
+                ??ν븯湲?
               </button>
             </div>
           </form>
@@ -199,10 +199,11 @@ const BoardWriteContent = ({ mainCategory, subCategory, navItems }) => {
 
 const BoardWritePage = (props) => {
   return (
-    <Suspense fallback={<div>불러오는 중...</div>}>
+    <Suspense fallback={<div>遺덈윭?ㅻ뒗 以?..</div>}>
       <BoardWriteContent {...props} />
     </Suspense>
   )
 }
 
 export default BoardWritePage
+

@@ -1,24 +1,24 @@
-import React from 'react'
+﻿import React from 'react'
 import SubPageLayout from '@/components/SubPageLayout'
 
 const GreetingsPage = () => {
   const navItems = [
-    { name: '인사말', path: '/about/greetings' },
-    { name: '교육목표', path: '/about/goals' },
-    { name: '학교연혁', path: '/about/history' },
-    { name: '오시는 길', path: '/about/map' },
+    { name: '?몄궗留?, path: '/about/greetings' },
+    { name: '援먯쑁紐⑺몴', path: '/about/goals' },
+    { name: '?숆탳?고쁺', path: '/about/history' },
+    { name: '?ㅼ떆??湲?, path: '/about/map' },
   ]
 
   return (
     <SubPageLayout 
-      mainCategory="학교소개" 
-      subCategory="인사말" 
+      mainCategory="?숆탳?뚭컻" 
+      subCategory="?몄궗留? 
       navItems={navItems}
     >
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-primary font-bold text-lg mb-4 tracking-widest uppercase">Greetings</h2>
-          <h3 className="text-4xl font-bold text-gray-800">배움이 즐겁고 성장이 기쁜 학교</h3>
+          <h3 className="text-4xl font-bold text-gray-800">諛곗???利먭쾪怨??깆옣??湲곗걶 ?숆탳</h3>
           <div className="w-16 h-1 bg-secondary mx-auto mt-6" />
         </div>
 
@@ -34,17 +34,17 @@ const GreetingsPage = () => {
           </div>
           <div className="lg:w-2/3 space-y-6 text-gray-600 leading-relaxed text-lg">
             <p>
-              안녕하십니까? TJSCHOOL 홈페이지를 찾아주신 여러분을 진심으로 환영합니다.
+              ?덈뀞?섏떗?덇퉴? TJSCHOOL ?덊럹?댁?瑜?李얠븘二쇱떊 ?щ윭遺꾩쓣 吏꾩떖?쇰줈 ?섏쁺?⑸땲??
             </p>
             <p>
-              우리 학교는 기독교 정신을 바탕으로, 학생들이 하나님을 경외하고 이웃을 사랑하는 글로벌 리더로 성장할 수 있도록 돕는 교육 공동체입니다. 
-              오늘날의 급변하는 사회 속에서 우리 아이들에게 가장 필요한 것은 단순한 지식의 습득보다는 스스로 생각하고 문제를 해결해 나가는 '창의적 잠재력'과 타인과 소통하며 협력하는 '따뜻한 인성'입니다.
+              ?곕━ ?숆탳??湲곕룆援??뺤떊??諛뷀깢?쇰줈, ?숈깮?ㅼ씠 ?섎굹?섏쓣 寃쎌쇅?섍퀬 ?댁썐???щ옉?섎뒗 湲濡쒕쾶 由щ뜑濡??깆옣?????덈룄濡??뺣뒗 援먯쑁 怨듬룞泥댁엯?덈떎. 
+              ?ㅻ뒛?좎쓽 湲됰??섎뒗 ?ы쉶 ?띿뿉???곕━ ?꾩씠?ㅼ뿉寃?媛???꾩슂??寃껋? ?⑥닚??吏?앹쓽 ?듬뱷蹂대떎???ㅼ뒪濡??앷컖?섍퀬 臾몄젣瑜??닿껐???섍???'李쎌쓽???좎옱??怨???멸낵 ?뚰넻?섎ŉ ?묐젰?섎뒗 '?곕쑜???몄꽦'?낅땲??
             </p>
             <p>
-              TJSCHOOL의 모든 교직원은 아이들이 자신의 소중한 가치를 깨닫고, 배움의 즐거움 속에서 자신의 꿈을 마음껏 펼칠 수 있는 안전하고 행복한 터전이 되도록 최선을 다하고 있습니다.
+              TJSCHOOL??紐⑤뱺 援먯쭅?먯? ?꾩씠?ㅼ씠 ?먯떊???뚯쨷??媛移섎? 源⑤떕怨? 諛곗???利먭굅? ?띿뿉???먯떊??轅덉쓣 留덉쓬猿??쇱튌 ???덈뒗 ?덉쟾?섍퀬 ?됰났???곗쟾???섎룄濡?理쒖꽑???ㅽ븯怨??덉뒿?덈떎.
             </p>
             <p className="font-bold text-gray-800 pt-10">
-              TJSCHOOL 교장 <span className="text-2xl ml-4 font-serif italic text-primary">홍 길 동</span>
+              TJSCHOOL 援먯옣 <span className="text-2xl ml-4 font-serif italic text-primary">??湲???/span>
             </p>
           </div>
         </div>
@@ -54,3 +54,4 @@ const GreetingsPage = () => {
 }
 
 export default GreetingsPage
+

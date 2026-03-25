@@ -1,13 +1,13 @@
-'use client';
+﻿'use client';
 import React, { useState, useEffect } from 'react'
 import SubPageLayout from '@/components/SubPageLayout'
 import { getSupabase } from '@/lib/supabase'
 
-const HistoryPage = ({ mainCategory = '학교소개', subCategory = '학교연혁', navItems = [
-  { name: '인사말', path: '/about/greetings' },
-  { name: '교육목표', path: '/about/goals' },
-  { name: '학교연혁', path: '/about/history' },
-  { name: '오시는길', path: '/about/map' },
+const HistoryPage = ({ mainCategory = '?숆탳?뚭컻', subCategory = '?숆탳?고쁺', navItems = [
+  { name: '?몄궗留?, path: '/about/greetings' },
+  { name: '援먯쑁紐⑺몴', path: '/about/goals' },
+  { name: '?숆탳?고쁺', path: '/about/history' },
+  { name: '?ㅼ떆?붽만', path: '/about/map' },
 ] }) => {
   const [histories, setHistories] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -33,7 +33,7 @@ const HistoryPage = ({ mainCategory = '학교소개', subCategory = '학교연�
               year,
               events: grouped[year]
                 .sort((a, b) => b.month - a.month)
-                .map(e => `${e.month}월 ${e.content}`)
+                .map(e => `${e.month}??${e.content}`)
             }))
 
           setHistories(formatted)
@@ -50,12 +50,12 @@ const HistoryPage = ({ mainCategory = '학교소개', subCategory = '학교연�
   return (
     <SubPageLayout mainCategory={mainCategory} subCategory={subCategory} navItems={navItems}>
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl font-black text-gray-800 mb-12 translate-x-4">연혁</h2>
+        <h2 className="text-4xl font-black text-gray-800 mb-12 translate-x-4">?고쁺</h2>
         
         {isLoading ? (
-          <div className="py-20 text-center text-gray-400">데이터를 불러오는 중입니다...</div>
+          <div className="py-20 text-center text-gray-400">?곗씠?곕? 遺덈윭?ㅻ뒗 以묒엯?덈떎...</div>
         ) : histories.length === 0 ? (
-          <div className="py-20 text-center text-gray-400">등록된 연혁이 없습니다.</div>
+          <div className="py-20 text-center text-gray-400">?깅줉???고쁺???놁뒿?덈떎.</div>
         ) : (
           <div className="relative border-l-4 border-gray-100 ml-4 md:ml-12 space-y-16 pb-12">
             {histories.map((item, i) => (

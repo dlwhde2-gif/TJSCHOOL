@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react'
 import { UserPlus, Mail, Lock, User, Phone, AlertCircle, Loader2, CheckCircle2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -33,7 +33,7 @@ const RegisterPage = () => {
         .single()
 
       if (existingUser) {
-        throw new Error('이미 등록된 아이디입니다.')
+        throw new Error('?대? ?깅줉???꾩씠?붿엯?덈떎.')
       }
 
       // 2. Insert into custom users table
@@ -52,7 +52,7 @@ const RegisterPage = () => {
       if (insertError) throw insertError
 
       setSuccess(true)
-      window.alert('가입 신청이 완료되었습니다. 관리자 승인 후 로그인이 가능합니다.')
+      window.alert('媛???좎껌???꾨즺?섏뿀?듬땲?? 愿由ъ옄 ?뱀씤 ??濡쒓렇?몄씠 媛?ν빀?덈떎.')
       setTimeout(() => router.push('/login'), 3000)
     } catch (err) {
       setError(err.message)
@@ -68,17 +68,17 @@ const RegisterPage = () => {
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-green-600 mx-auto mb-8 animate-bounce">
             <CheckCircle2 size={40} />
           </div>
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">신청 완료!</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">?좎껌 ?꾨즺!</h2>
           <p className="text-gray-500 leading-relaxed mb-8">
-            TJSCHOOL 가입 신청이 정상적으로 접수되었습니다.<br />
-            관리자가 정보를 확인한 후 승인해 드릴 예정입니다.<br />
-            감사합니다.
+            TJSCHOOL 媛???좎껌???뺤긽?곸쑝濡??묒닔?섏뿀?듬땲??<br />
+            愿由ъ옄媛 ?뺣낫瑜??뺤씤?????뱀씤???쒕┫ ?덉젙?낅땲??<br />
+            媛먯궗?⑸땲??
           </p>
           <button 
             onClick={() => router.push('/login')}
             className="w-full bg-primary text-white py-4 rounded-2xl font-bold shadow-lg shadow-primary/20"
           >
-            로그인 페이지로 이동
+            濡쒓렇???섏씠吏濡??대룞
           </button>
         </div>
       </div>
@@ -93,8 +93,8 @@ const RegisterPage = () => {
             <img src="/logo.png" alt="TJSCHOOL Logo" className="w-12 h-12 object-contain group-hover:scale-110 transition-transform" />
             <span className="text-2xl font-bold text-primary tracking-tighter">TJSCHOOL</span>
           </Link>
-          <h2 className="text-3xl font-bold text-gray-800">가입 신청</h2>
-          <p className="mt-2 text-gray-500">TJSCHOOL 캠퍼스 일원이 되어보세요.</p>
+          <h2 className="text-3xl font-bold text-gray-800">媛???좎껌</h2>
+          <p className="mt-2 text-gray-500">TJSCHOOL 罹좏띁???쇱썝???섏뼱蹂댁꽭??</p>
         </div>
 
         {error && (
@@ -106,7 +106,7 @@ const RegisterPage = () => {
 
         <form onSubmit={handleRegister} className="space-y-4">
           <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-700 ml-4">이름</label>
+            <label className="text-sm font-bold text-gray-700 ml-4">?대쫫</label>
             <div className="relative">
               <User className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
               <input 
@@ -115,13 +115,13 @@ const RegisterPage = () => {
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
                 className="w-full pl-14 pr-6 py-4 bg-gray-50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl outline-none transition-all"
-                placeholder="실명을 입력해주세요"
+                placeholder="?ㅻ챸???낅젰?댁＜?몄슂"
               />
             </div>
           </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 ml-4">아이디</label>
+              <label className="text-sm font-bold text-gray-700 ml-4">?꾩씠??/label>
               <div className="relative group">
                 <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors" size={20} />
                 <input 
@@ -130,13 +130,13 @@ const RegisterPage = () => {
                   value={formData.id}
                   onChange={(e) => setFormData({ ...formData, id: e.target.value })}
                   className="w-full pl-14 pr-6 py-4 bg-gray-50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl outline-none transition-all"
-                  placeholder="영문/숫자 아이디 입력"
+                  placeholder="?곷Ц/?レ옄 ?꾩씠???낅젰"
                 />
               </div>
             </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-700 ml-4">비밀번호</label>
+            <label className="text-sm font-bold text-gray-700 ml-4">鍮꾨?踰덊샇</label>
             <div className="relative">
               <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
               <input 
@@ -145,14 +145,14 @@ const RegisterPage = () => {
                 value={formData.password}
                 onChange={(e) => setFormData({...formData, password: e.target.value})}
                 className="w-full pl-14 pr-6 py-4 bg-gray-50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl outline-none transition-all"
-                placeholder="4자 이상 입력해주세요"
+                placeholder="4???댁긽 ?낅젰?댁＜?몄슂"
                 minLength={4}
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-700 ml-4">학생 이름</label>
+            <label className="text-sm font-bold text-gray-700 ml-4">?숈깮 ?대쫫</label>
             <div className="relative">
               <User className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
               <input 
@@ -161,7 +161,7 @@ const RegisterPage = () => {
                 value={formData.studentName}
                 onChange={(e) => setFormData({...formData, studentName: e.target.value})}
                 className="w-full pl-14 pr-6 py-4 bg-gray-50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl outline-none transition-all"
-                placeholder="학생 실명을 입력해주세요"
+                placeholder="?숈깮 ?ㅻ챸???낅젰?댁＜?몄슂"
               />
             </div>
           </div>
@@ -174,16 +174,16 @@ const RegisterPage = () => {
             {isLoading ? (
               <>
                 <Loader2 size={24} className="animate-spin" />
-                <span>처리 중...</span>
+                <span>泥섎━ 以?..</span>
               </>
             ) : (
-              <span>가입 신청하기</span>
+              <span>媛???좎껌?섍린</span>
             )}
           </button>
         </form>
 
         <p className="mt-8 text-center text-gray-500">
-          이미 계정이 있으신가요? <Link href="/login" className="text-primary font-bold hover:underline">로그인하기</Link>
+          ?대? 怨꾩젙???덉쑝?좉??? <Link href="/login" className="text-primary font-bold hover:underline">濡쒓렇?명븯湲?/Link>
         </p>
       </div>
     </div>
@@ -191,3 +191,4 @@ const RegisterPage = () => {
 }
 
 export default RegisterPage
+

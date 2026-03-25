@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react'
 import { LogIn, Mail, Lock, AlertCircle, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -27,15 +27,15 @@ const LoginPage = () => {
         .single()
 
       if (userError || !user) {
-        throw new Error('등록되지 않은 아이디이거나 정보를 찾을 수 없습니다.')
+        throw new Error('?깅줉?섏? ?딆? ?꾩씠?붿씠嫄곕굹 ?뺣낫瑜?李얠쓣 ???놁뒿?덈떎.')
       }
 
       if (user.password !== password) {
-        throw new Error('비밀번호가 일치하지 않습니다.')
+        throw new Error('鍮꾨?踰덊샇媛 ?쇱튂?섏? ?딆뒿?덈떎.')
       }
 
       if (!user.isApproved) {
-        throw new Error('관리자의 가입 승인이 대기 중입니다.')
+        throw new Error('愿由ъ옄??媛???뱀씤???湲?以묒엯?덈떎.')
       }
 
       // 2. Success - Save to session
@@ -46,7 +46,7 @@ const LoginPage = () => {
         role: user.role
       }))
 
-      window.alert(`${user.name}님, 환영합니다!`)
+      window.alert(`${user.name}?? ?섏쁺?⑸땲??`)
       router.push('/')
       router.refresh()
     } catch (err) {
@@ -64,8 +64,8 @@ const LoginPage = () => {
             <img src="/TJPROJECT%20LOGO.png" alt="TJSCHOOL Logo" className="h-12 w-auto object-contain group-hover:scale-110 transition-transform" />
             <span className="text-2xl font-bold text-primary tracking-tighter">TJSCHOOL</span>
           </Link>
-          <h2 className="text-3xl font-bold text-gray-800">로그인</h2>
-          <p className="mt-2 text-gray-500">TJSCHOOL 캠퍼스에 오신 것을 환영합니다.</p>
+          <h2 className="text-3xl font-bold text-gray-800">濡쒓렇??/h2>
+          <p className="mt-2 text-gray-500">TJSCHOOL 罹좏띁?ㅼ뿉 ?ㅼ떊 寃껋쓣 ?섏쁺?⑸땲??</p>
         </div>
 
         {error && (
@@ -77,7 +77,7 @@ const LoginPage = () => {
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-700 ml-4">아이디</label>
+            <label className="text-sm font-bold text-gray-700 ml-4">?꾩씠??/label>
             <div className="relative group">
               <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors" size={20} />
               <input 
@@ -86,13 +86,13 @@ const LoginPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-14 pr-6 py-4 bg-gray-50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl outline-none transition-all"
-                placeholder="아이디를 입력하세요"
+                placeholder="?꾩씠?붾? ?낅젰?섏꽭??
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-700 ml-4">비밀번호</label>
+            <label className="text-sm font-bold text-gray-700 ml-4">鍮꾨?踰덊샇</label>
             <div className="relative group">
               <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors" size={20} />
               <input 
@@ -101,7 +101,7 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full pl-14 pr-6 py-4 bg-gray-50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl outline-none transition-all"
-                placeholder="••••"
+                placeholder="?™™™?
               />
             </div>
           </div>
@@ -114,10 +114,10 @@ const LoginPage = () => {
             {isLoading ? (
               <>
                 <Loader2 size={24} className="animate-spin" />
-                <span>로그인 중...</span>
+                <span>濡쒓렇??以?..</span>
               </>
             ) : (
-              <span>로그인하기</span>
+              <span>濡쒓렇?명븯湲?/span>
             )}
           </button>
         </form>
@@ -125,11 +125,11 @@ const LoginPage = () => {
         <div className="mt-10 text-center space-y-4">
           <div className="relative">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-100"></div></div>
-            <span className="relative px-4 bg-white text-gray-400 text-sm">또는</span>
+            <span className="relative px-4 bg-white text-gray-400 text-sm">?먮뒗</span>
           </div>
           <p className="text-gray-500">
-            아직 계정이 없으신가요? <br />
-            <Link href="/register" className="text-primary font-bold hover:underline">가입 신청하기</Link>
+            ?꾩쭅 怨꾩젙???놁쑝?좉??? <br />
+            <Link href="/register" className="text-primary font-bold hover:underline">媛???좎껌?섍린</Link>
           </p>
         </div>
       </div>
@@ -138,3 +138,4 @@ const LoginPage = () => {
 }
 
 export default LoginPage
+

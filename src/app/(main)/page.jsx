@@ -1,4 +1,4 @@
-import Header from '@/components/Header'
+﻿import Header from '@/components/Header'
 import HeroSlider from '@/components/HeroSlider'
 import InfoSection from '@/components/InfoSection'
 import AdmissionSection from '@/components/AdmissionSection'
@@ -19,3 +19,4 @@ export default function Home() {
     </main>
   )
 }
+

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState, useEffect } from 'react'
 import SubPageLayout from '@/components/SubPageLayout'
 import { Youtube, Calendar, Eye, ChevronLeft, ChevronRight, Play } from 'lucide-react'
@@ -31,7 +31,7 @@ const VideoPage = ({ mainCategory, subCategory, navItems }) => {
         if (error) throw error
         setItems(data || [])
       } catch (err) {
-        console.error('영상 불러오기 오류:', err)
+        console.error('?곸긽 遺덈윭?ㅺ린 ?ㅻ쪟:', err)
       } finally {
         setIsLoading(false)
       }
@@ -45,7 +45,7 @@ const VideoPage = ({ mainCategory, subCategory, navItems }) => {
     <SubPageLayout mainCategory={mainCategory} subCategory={subCategory} navItems={navItems}>
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
-          <p className="text-gray-500 font-medium">총 <span className="text-primary font-bold">{items.length}</span>개의 영상이 등록되어 있습니다.</p>
+          <p className="text-gray-500 font-medium">珥?<span className="text-primary font-bold">{items.length}</span>媛쒖쓽 ?곸긽???깅줉?섏뼱 ?덉뒿?덈떎.</p>
           
           {user && (
             <button 
@@ -53,16 +53,16 @@ const VideoPage = ({ mainCategory, subCategory, navItems }) => {
               className="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all flex items-center"
             >
               <Youtube size={18} className="mr-2" />
-              영상 등록하기
+              ?곸긽 ?깅줉?섍린
             </button>
           )}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10">
           {isLoading ? (
-            <div className="col-span-full py-20 text-center text-gray-400 italic">영상을 불러오는 중입니다...</div>
+            <div className="col-span-full py-20 text-center text-gray-400 italic">?곸긽??遺덈윭?ㅻ뒗 以묒엯?덈떎...</div>
           ) : items.length === 0 ? (
-            <div className="col-span-full py-20 text-center text-gray-400 italic">등록된 영상이 없습니다.</div>
+            <div className="col-span-full py-20 text-center text-gray-400 italic">?깅줉???곸긽???놁뒿?덈떎.</div>
           ) : (
             items.map((item) => (
               <a 
@@ -118,3 +118,4 @@ const VideoPage = ({ mainCategory, subCategory, navItems }) => {
 }
 
 export default VideoPage
+

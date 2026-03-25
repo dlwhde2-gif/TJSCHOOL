@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState, useEffect } from 'react'
 import SubPageLayout from '@/components/SubPageLayout'
 import { Calendar, Eye, User, ArrowLeft, Trash2, Edit } from 'lucide-react'
@@ -28,7 +28,7 @@ const BoardDetailPage = ({ mainCategory, subCategory, navItems }) => {
         // Increment views
         await supabase.from('posts').update({ views: (data.views || 0) + 1 }).eq('id', id)
       } catch (err) {
-        console.error('글 불러오기 에러:', err)
+        console.error('湲 遺덈윭?ㅺ린 ?먮윭:', err)
       } finally {
         setIsLoading(false)
       }
@@ -37,20 +37,20 @@ const BoardDetailPage = ({ mainCategory, subCategory, navItems }) => {
   }, [id])
 
   const handleDelete = async () => {
-    if (!window.confirm('정말 삭제하시겠습니까?')) return
+    if (!window.confirm('?뺣쭚 ??젣?섏떆寃좎뒿?덇퉴?')) return
     const supabase = getSupabase()
     try {
       const { error } = await supabase.from('posts').delete().eq('id', id)
       if (error) throw error
-      window.alert('삭제되었습니다.')
+      window.alert('??젣?섏뿀?듬땲??')
       router.back()
     } catch (err) {
-      window.alert('삭제 실패: ' + err.message)
+      window.alert('??젣 ?ㅽ뙣: ' + err.message)
     }
   }
 
-  if (isLoading) return <SubPageLayout mainCategory={mainCategory} subCategory={subCategory} navItems={navItems}><div className="py-20 text-center">로딩 중...</div></SubPageLayout>
-  if (!post) return <SubPageLayout mainCategory={mainCategory} subCategory={subCategory} navItems={navItems}><div className="py-20 text-center">글을 찾을 수 없습니다.</div></SubPageLayout>
+  if (isLoading) return <SubPageLayout mainCategory={mainCategory} subCategory={subCategory} navItems={navItems}><div className="py-20 text-center">濡쒕뵫 以?..</div></SubPageLayout>
+  if (!post) return <SubPageLayout mainCategory={mainCategory} subCategory={subCategory} navItems={navItems}><div className="py-20 text-center">湲??李얠쓣 ???놁뒿?덈떎.</div></SubPageLayout>
 
   const isAuthor = user && (user.name === post.author || user.role === 'admin')
 
@@ -58,7 +58,7 @@ const BoardDetailPage = ({ mainCategory, subCategory, navItems }) => {
     <SubPageLayout mainCategory={mainCategory} subCategory={subCategory} navItems={navItems}>
       <div className="max-w-4xl mx-auto">
         <button onClick={() => router.back()} className="flex items-center text-gray-400 hover:text-primary mb-8 font-medium transition-colors">
-          <ArrowLeft size={20} className="mr-2" /> 목록으로 돌아가기
+          <ArrowLeft size={20} className="mr-2" /> 紐⑸줉?쇰줈 ?뚯븘媛湲?
         </button>
 
         <div className="bg-white rounded-[40px] shadow-sm border border-gray-100 overflow-hidden">
@@ -79,8 +79,8 @@ const BoardDetailPage = ({ mainCategory, subCategory, navItems }) => {
                    <img src={post.image} alt="Post Content" className="w-full h-auto" />
                  ) : (
                    <div className="p-12 bg-gray-50 flex flex-col items-center">
-                     <p className="text-gray-400 mb-4 font-bold">{post.fileName || '첨부파일'}</p>
-                     <a href={post.image} download className="bg-primary text-white px-8 py-3 rounded-xl font-bold">파일 다운로드</a>
+                     <p className="text-gray-400 mb-4 font-bold">{post.fileName || '泥⑤??뚯씪'}</p>
+                     <a href={post.image} download className="bg-primary text-white px-8 py-3 rounded-xl font-bold">?뚯씪 ?ㅼ슫濡쒕뱶</a>
                    </div>
                  )}
                </div>
@@ -96,13 +96,13 @@ const BoardDetailPage = ({ mainCategory, subCategory, navItems }) => {
                 onClick={() => router.push(`${window.location.pathname.replace(id, '')}write?edit=${id}`)}
                 className="flex items-center px-6 py-3 text-primary hover:bg-primary/10 rounded-2xl font-bold transition-all"
               >
-                <Edit size={20} className="mr-2" /> 수정하기
+                <Edit size={20} className="mr-2" /> ?섏젙?섍린
               </button>
               <button 
                 onClick={handleDelete}
                 className="flex items-center px-6 py-3 text-red-500 hover:bg-red-50 rounded-2xl font-bold transition-all"
               >
-                <Trash2 size={20} className="mr-2" /> 삭제하기
+                <Trash2 size={20} className="mr-2" /> ??젣?섍린
               </button>
             </div>
           )}
@@ -113,3 +113,4 @@ const BoardDetailPage = ({ mainCategory, subCategory, navItems }) => {
 }
 
 export default BoardDetailPage
+

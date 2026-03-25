@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState, useEffect } from 'react'
 import { Plus, Trash2, Save, LogOut, Image as ImageIcon, Settings, Bell, Users, Loader2, Check, X, LayoutDashboard, Calendar } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -19,14 +19,14 @@ const AdminDashboard = () => {
   const router = useRouter()
   const supabase = getSupabase()
 
-  const categories = ['학교소개', '입학안내', '교육과정', '학교생활', '커뮤니티']
+  const categories = ['?숆탳?뚭컻', '?낇븰?덈궡', '援먯쑁怨쇱젙', '?숆탳?앺솢', '而ㅻ??덊떚']
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user')
     if (savedUser) {
       const parsed = JSON.parse(savedUser)
       if (parsed.role !== 'admin') {
-        window.alert('관리자 권한이 없습니다.')
+        window.alert('愿由ъ옄 沅뚰븳???놁뒿?덈떎.')
         router.push('/')
       }
       setAdminUser(parsed)
@@ -82,7 +82,7 @@ const AdminDashboard = () => {
   }
 
   const handleDeleteUser = async (username) => {
-    if (!window.confirm('정말 삭제하시겠습니까?')) return
+    if (!window.confirm('?뺣쭚 ??젣?섏떆寃좎뒿?덇퉴?')) return
     try {
       const { error } = await supabase.from('users').delete().eq('username', username)
       if (error) throw error
@@ -95,7 +95,7 @@ const AdminDashboard = () => {
     try {
       const { error } = await supabase.from('settings').upsert({ key: 'heroImages', value: JSON.stringify(heroImages) }, { onConflict: 'key' })
       if (error) throw error
-      window.alert('히어로 이미지가 저장되었습니다.')
+      window.alert('?덉뼱濡??대?吏媛 ??λ릺?덉뒿?덈떎.')
     } catch (err) { window.alert(err.message) }
     finally { setIsLoading(false) }
   }
@@ -113,7 +113,7 @@ const AdminDashboard = () => {
   }
 
   const handleDeletePopup = async (id) => {
-    if (!window.confirm('삭제하시겠습니까?')) return
+    if (!window.confirm('??젣?섏떆寃좎뒿?덇퉴?')) return
     try {
       const { error } = await supabase.from('popups').delete().eq('id', id)
       if (error) throw error
@@ -132,14 +132,14 @@ const AdminDashboard = () => {
   const handleAddHistory = async () => {
     try {
       await supabase.from('histories').insert(newHistory)
-      window.alert('연혁이 추가되었습니다.')
+      window.alert('?고쁺??異붽??섏뿀?듬땲??')
       setNewHistory({ year: new Date().getFullYear(), month: 1, content: '' })
       fetchData()
     } catch (err) { window.alert(err.message) }
   }
 
   const handleDeleteHistory = async (id) => {
-    if (!window.confirm('정말 삭제하시겠습니까?')) return
+    if (!window.confirm('?뺣쭚 ??젣?섏떆寃좎뒿?덇퉴?')) return
     try {
       await supabase.from('histories').delete().eq('id', id)
       fetchData()
@@ -158,26 +158,26 @@ const AdminDashboard = () => {
         </Link>
         <nav className="flex-1 space-y-2">
            <button onClick={() => setActiveTab('dashboard')} className={`w-full flex items-center space-x-3 p-3 rounded-xl font-bold transition-all ${activeTab === 'dashboard' ? 'bg-primary/5 text-primary' : 'text-gray-400 hover:bg-gray-50'}`}>
-             <LayoutDashboard size={20} /> <span>대시보드</span>
+             <LayoutDashboard size={20} /> <span>??쒕낫??/span>
            </button>
            <button onClick={() => setActiveTab('users')} className={`w-full flex items-center space-x-3 p-3 rounded-xl font-bold transition-all ${activeTab === 'users' ? 'bg-primary/5 text-primary' : 'text-gray-400 hover:bg-gray-50'}`}>
-             <Users size={20} /> <span>회원 승인 관리</span>
+             <Users size={20} /> <span>?뚯썝 ?뱀씤 愿由?/span>
            </button>
            <button onClick={() => setActiveTab('popups')} className={`w-full flex items-center space-x-3 p-3 rounded-xl font-bold transition-all ${activeTab === 'popups' ? 'bg-primary/5 text-primary' : 'text-gray-400 hover:bg-gray-50'}`}>
-             <Bell size={20} /> <span>팝업 관리</span>
+             <Bell size={20} /> <span>?앹뾽 愿由?/span>
            </button>
            <button onClick={() => setActiveTab('heroes')} className={`w-full flex items-center space-x-3 p-3 rounded-xl font-bold transition-all ${activeTab === 'heroes' ? 'bg-primary/5 text-primary' : 'text-gray-400 hover:bg-gray-50'}`}>
-             <ImageIcon size={20} /> <span>메인 히어로</span>
+             <ImageIcon size={20} /> <span>硫붿씤 ?덉뼱濡?/span>
            </button>
            <button onClick={() => setActiveTab('subheroes')} className={`w-full flex items-center space-x-3 p-3 rounded-xl font-bold transition-all ${activeTab === 'subheroes' ? 'bg-primary/5 text-primary' : 'text-gray-400 hover:bg-gray-50'}`}>
-             <Settings size={20} /> <span>서브 히어로</span>
+             <Settings size={20} /> <span>?쒕툕 ?덉뼱濡?/span>
            </button>
            <button onClick={() => setActiveTab('history')} className={`w-full flex items-center space-x-3 p-3 rounded-xl font-bold transition-all ${activeTab === 'history' ? 'bg-primary/5 text-primary' : 'text-gray-400 hover:bg-gray-50'}`}>
-             <Calendar size={20} /> <span>학교 연혁 관리</span>
+             <Calendar size={20} /> <span>?숆탳 ?고쁺 愿由?/span>
            </button>
            <hr className="my-4 border-gray-50" />
            <Link href="/community/notice" className="w-full flex items-center space-x-3 p-3 text-gray-400 hover:bg-gray-50 rounded-xl transition-all">
-             <Settings size={20} /> <span>홈페이지 관리</span>
+             <Settings size={20} /> <span>?덊럹?댁? 愿由?/span>
            </Link>
         </nav>
       </aside>
@@ -185,15 +185,15 @@ const AdminDashboard = () => {
       <main className="flex-1 p-8 md:p-12 overflow-y-auto">
         <div className="flex justify-between items-center mb-12">
           <h1 className="text-3xl font-black text-gray-800 tracking-tight">
-            {activeTab === 'dashboard' && '관리자 대시보드'}
-            {activeTab === 'users' && '회원 승인 관리'}
-            {activeTab === 'popups' && '팝업 관리'}
-            {activeTab === 'heroes' && '메인 히어로 관리'}
-            {activeTab === 'subheroes' && '서브 히어로 관리'}
-            {activeTab === 'history' && '학교 연혁 관리'}
+            {activeTab === 'dashboard' && '愿由ъ옄 ??쒕낫??}
+            {activeTab === 'users' && '?뚯썝 ?뱀씤 愿由?}
+            {activeTab === 'popups' && '?앹뾽 愿由?}
+            {activeTab === 'heroes' && '硫붿씤 ?덉뼱濡?愿由?}
+            {activeTab === 'subheroes' && '?쒕툕 ?덉뼱濡?愿由?}
+            {activeTab === 'history' && '?숆탳 ?고쁺 愿由?}
           </h1>
           <button onClick={() => { localStorage.removeItem('user'); router.push('/') }} className="flex items-center text-sm font-bold text-gray-400 hover:text-red-500 transition-colors">
-            <LogOut size={18} className="mr-2" /> 로그아웃
+            <LogOut size={18} className="mr-2" /> 濡쒓렇?꾩썐
           </button>
         </div>
 
@@ -202,15 +202,15 @@ const AdminDashboard = () => {
             {activeTab === 'dashboard' && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100">
-                  <p className="text-gray-400 font-bold mb-2">대기 회원</p>
+                  <p className="text-gray-400 font-bold mb-2">?湲??뚯썝</p>
                   <p className="text-4xl font-black text-primary">{users.filter(u => !u.isApproved).length}</p>
                 </div>
                 <div className="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100">
-                  <p className="text-gray-400 font-bold mb-2">활성 팝업</p>
+                  <p className="text-gray-400 font-bold mb-2">?쒖꽦 ?앹뾽</p>
                   <p className="text-4xl font-black text-secondary">{popups.filter(p => p.isActive).length}</p>
                 </div>
                 <div className="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100">
-                  <p className="text-gray-400 font-bold mb-2">히어로 이미지</p>
+                  <p className="text-gray-400 font-bold mb-2">?덉뼱濡??대?吏</p>
                   <p className="text-4xl font-black text-gray-800">{heroImages.length}</p>
                 </div>
               </div>
@@ -224,12 +224,12 @@ const AdminDashboard = () => {
                     type="text"
                     value={userSearchTerm}
                     onChange={(e) => setUserSearchTerm(e.target.value)}
-                    placeholder="아이디, 이름, 학생이름 검색..."
+                    placeholder="?꾩씠?? ?대쫫, ?숈깮?대쫫 寃??.."
                     className="w-full md:w-80 px-5 py-3 bg-gray-50 border border-transparent focus:bg-white focus:border-primary rounded-xl outline-none font-medium transition-all"
                   />
                   <button
                     onClick={() => {
-                      const headers = ['아이디', '이름', '학생이름', '역할', '승인상태']
+                      const headers = ['?꾩씠??, '?대쫫', '?숈깮?대쫫', '??븷', '?뱀씤?곹깭']
                       const csvData = users
                         .filter(u => 
                           u.username.toLowerCase().includes(userSearchTerm.toLowerCase()) || 
@@ -241,7 +241,7 @@ const AdminDashboard = () => {
                           u.name,
                           u.phone || '',
                           u.role,
-                          u.isApproved ? '승인완료' : '승인대기'
+                          u.isApproved ? '?뱀씤?꾨즺' : '?뱀씤?湲?
                         ])
                       
                       const csvString = [
@@ -253,26 +253,26 @@ const AdminDashboard = () => {
                       const url = URL.createObjectURL(blob)
                       const link = document.createElement('a')
                       link.href = url
-                      link.setAttribute('download', `TJSCHOOL_회원목록_${new Date().toISOString().split('T')[0]}.csv`)
+                      link.setAttribute('download', `TJSCHOOL_?뚯썝紐⑸줉_${new Date().toISOString().split('T')[0]}.csv`)
                       document.body.appendChild(link)
                       link.click()
                       document.body.removeChild(link)
                     }}
                     className="w-full md:w-auto px-6 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
                   >
-                    엑셀(CSV) 다운로드
+                    ?묒?(CSV) ?ㅼ슫濡쒕뱶
                   </button>
                 </div>
                 <div className="bg-white rounded-[40px] shadow-sm border border-gray-100 overflow-hidden">
                   <table className="w-full">
                   <thead className="bg-gray-50 border-b border-gray-100">
                     <tr>
-                      <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">아이디</th>
-                      <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">이름</th>
-                      <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">학생이름</th>
-                      <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">역할</th>
-                      <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">승인상태</th>
-                      <th className="px-8 py-5 text-right text-sm font-bold text-gray-400">작업</th>
+                      <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">?꾩씠??/th>
+                      <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">?대쫫</th>
+                      <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">?숈깮?대쫫</th>
+                      <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">??븷</th>
+                      <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">?뱀씤?곹깭</th>
+                      <th className="px-8 py-5 text-right text-sm font-bold text-gray-400">?묒뾽</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
@@ -290,7 +290,7 @@ const AdminDashboard = () => {
                         <td className="px-8 py-6"><span className={`px-3 py-1 rounded-full text-xs font-bold ${u.role === 'admin' ? 'bg-red-50 text-red-500' : 'bg-blue-50 text-blue-500'}`}>{u.role}</span></td>
                         <td className="px-8 py-6">
                           <span className={`px-3 py-1 rounded-full text-xs font-bold ${u.isApproved ? 'bg-green-50 text-green-500' : 'bg-orange-50 text-orange-500'}`}>
-                            {u.isApproved ? '승인완료' : '승인대기'}
+                            {u.isApproved ? '?뱀씤?꾨즺' : '?뱀씤?湲?}
                           </span>
                         </td>
                         <td className="px-8 py-6 text-right space-x-2">
@@ -313,7 +313,7 @@ const AdminDashboard = () => {
             {activeTab === 'popups' && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <button onClick={handleAddPopup} className="lg:col-span-2 py-8 border-2 border-dashed border-gray-200 rounded-[32px] text-gray-400 font-bold hover:bg-white hover:border-primary hover:text-primary transition-all flex items-center justify-center">
-                  <Plus size={24} className="mr-2" /> 새로운 팝업 추가
+                  <Plus size={24} className="mr-2" /> ?덈줈???앹뾽 異붽?
                 </button>
                 {popups.map(p => (
                   <div key={p.id} className="bg-white p-8 rounded-[40px] shadow-sm border border-gray-100 space-y-6">
@@ -348,17 +348,17 @@ const AdminDashboard = () => {
                            htmlFor={`popup-upload-${p.id}`}
                            className="w-full bg-primary/5 text-primary py-3 rounded-xl text-center font-bold cursor-pointer hover:bg-primary/10 transition-all"
                          >
-                           팝업 이미지 업로드
+                           ?앹뾽 ?대?吏 ?낅줈??
                          </label>
                          <input value={p.image} onChange={async (e) => {
                            const val = e.target.value
                            setPopups(popups.map(item => item.id === p.id ? {...item, image: val} : item))
                            await supabase.from('popups').update({ image: val }).eq('id', p.id)
-                         }} className="w-full text-[10px] text-gray-300 bg-transparent px-2 outline-none truncate" placeholder="이미지 URL" />
+                         }} className="w-full text-[10px] text-gray-300 bg-transparent px-2 outline-none truncate" placeholder="?대?吏 URL" />
                       </div>
                       <div className="flex items-center justify-between">
                         <button onClick={() => handleTogglePopup(p.id, p.isActive)} className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${p.isActive ? 'bg-secondary text-white' : 'bg-gray-100 text-gray-400'}`}>
-                          {p.isActive ? '표시 중' : '숨김'}
+                          {p.isActive ? '?쒖떆 以? : '?④?'}
                         </button>
                         <button onClick={() => handleDeletePopup(p.id)} className="p-2 text-gray-300 hover:text-red-500 transition-colors"><Trash2 size={20} /></button>
                       </div>
@@ -372,8 +372,8 @@ const AdminDashboard = () => {
             {activeTab === 'heroes' && (
               <div className="bg-white p-10 rounded-[40px] shadow-sm border border-gray-100 space-y-8">
                 <div className="flex justify-between items-center">
-                   <h3 className="text-xl font-bold">메인 슬라이드 관리</h3>
-                   <button onClick={handleUpdateHero} className="bg-primary text-white px-8 py-3 rounded-2xl font-bold shadow-lg shadow-primary/20">변경사항 저장</button>
+                   <h3 className="text-xl font-bold">硫붿씤 ?щ씪?대뱶 愿由?/h3>
+                   <button onClick={handleUpdateHero} className="bg-primary text-white px-8 py-3 rounded-2xl font-bold shadow-lg shadow-primary/20">蹂寃쎌궗?????/button>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {heroImages.map((url, i) => (
@@ -409,7 +409,7 @@ const AdminDashboard = () => {
                           htmlFor={`hero-upload-${i}`}
                           className="w-full bg-primary/5 text-primary py-2 rounded-xl text-center text-sm font-bold cursor-pointer hover:bg-primary/10 transition-all"
                         >
-                          이미지 업로드
+                          ?대?吏 ?낅줈??
                         </label>
                         <input 
                           value={url} 
@@ -419,7 +419,7 @@ const AdminDashboard = () => {
                             setHeroImages(next)
                           }}
                           className="w-full bg-white border border-gray-100 p-2 rounded-xl text-xs text-gray-500 outline-none truncate"
-                          placeholder="또는 이미지 URL 직접 입력"
+                          placeholder="?먮뒗 ?대?吏 URL 吏곸젒 ?낅젰"
                         />
                       </div>
 
@@ -427,7 +427,7 @@ const AdminDashboard = () => {
                     </div>
                   ))}
                   <button onClick={() => setHeroImages([...heroImages, ''])} className="aspect-[16/9] border-2 border-dashed border-gray-200 rounded-3xl text-gray-400 font-bold hover:bg-gray-100 transition-all flex flex-col items-center justify-center">
-                    <Plus size={32} className="mb-2" /> 새 이미지 추가
+                    <Plus size={32} className="mb-2" /> ???대?吏 異붽?
                   </button>
                 </div>
               </div>
@@ -436,7 +436,7 @@ const AdminDashboard = () => {
             {activeTab === 'subheroes' && (
               <div className="bg-white p-10 rounded-[40px] shadow-sm border border-gray-100 space-y-8">
                 <div className="flex justify-between items-center">
-                   <h3 className="text-xl font-bold">카테고리별 히어로 관리</h3>
+                   <h3 className="text-xl font-bold">移댄뀒怨좊━蹂??덉뼱濡?愿由?/h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {categories.map(cat => {
@@ -467,7 +467,7 @@ const AdminDashboard = () => {
                                 
                                 const { data: { publicUrl } } = supabase.storage.from('yujung-storage').getPublicUrl(path)
                                 await handleUpdateSubHero(cat, publicUrl)
-                                window.alert(`${cat} 히어로 이미지가 업데이트되었습니다.`)
+                                window.alert(`${cat} ?덉뼱濡??대?吏媛 ?낅뜲?댄듃?섏뿀?듬땲??`)
                                 fetchData() // Refresh
                               } catch (err) { window.alert(err.message) }
                               finally { setIsLoading(false) }
@@ -477,7 +477,7 @@ const AdminDashboard = () => {
                             htmlFor={`upload-${cat}`}
                             className="w-full bg-white px-4 py-3 rounded-xl text-center font-bold text-primary border-2 border-primary/20 hover:bg-primary/5 cursor-pointer transition-all"
                           >
-                            이미지 업로드
+                            ?대?吏 ?낅줈??
                           </label>
                           <input 
                             value={current} 
@@ -490,12 +490,12 @@ const AdminDashboard = () => {
                               })
                             }}
                             className="w-full bg-white px-4 py-2 rounded-xl text-xs outline-none border border-gray-100 truncate"
-                            placeholder="또는 이미지 URL 입력"
+                            placeholder="?먮뒗 ?대?吏 URL ?낅젰"
                           />
                           <button 
                             onClick={() => handleUpdateSubHero(cat, current)}
                             className="bg-primary text-white py-2 rounded-xl font-bold text-sm"
-                          >직접 입력 저장</button>
+                          >吏곸젒 ?낅젰 ???/button>
                         </div>
                       </div>
                     )
@@ -508,17 +508,17 @@ const AdminDashboard = () => {
             {activeTab === 'history' && (
               <div className="space-y-8">
                 <div className="bg-white p-8 rounded-[40px] shadow-sm border border-gray-100 space-y-6">
-                  <h3 className="text-xl font-bold">학교 연혁 추가</h3>
+                  <h3 className="text-xl font-bold">?숆탳 ?고쁺 異붽?</h3>
                   <div className="flex flex-col md:flex-row gap-4">
-                    <input type="number" value={newHistory.year} onChange={e => setNewHistory({...newHistory, year: e.target.value})} placeholder="연도 (예: 2024)" className="px-6 py-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-primary rounded-2xl outline-none w-32 font-bold text-center" />
-                    <input type="number" min="1" max="12" value={newHistory.month} onChange={e => setNewHistory({...newHistory, month: e.target.value})} placeholder="월" className="px-6 py-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-primary rounded-2xl outline-none w-24 font-bold text-center" />
-                    <input type="text" value={newHistory.content} onChange={e => setNewHistory({...newHistory, content: e.target.value})} placeholder="연혁 내용을 입력하세요" className="flex-1 px-6 py-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-primary rounded-2xl outline-none font-medium" />
-                    <button onClick={handleAddHistory} className="px-8 py-4 bg-primary text-white rounded-2xl font-bold whitespace-nowrap shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform">추가하기</button>
+                    <input type="number" value={newHistory.year} onChange={e => setNewHistory({...newHistory, year: e.target.value})} placeholder="?곕룄 (?? 2024)" className="px-6 py-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-primary rounded-2xl outline-none w-32 font-bold text-center" />
+                    <input type="number" min="1" max="12" value={newHistory.month} onChange={e => setNewHistory({...newHistory, month: e.target.value})} placeholder="?? className="px-6 py-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-primary rounded-2xl outline-none w-24 font-bold text-center" />
+                    <input type="text" value={newHistory.content} onChange={e => setNewHistory({...newHistory, content: e.target.value})} placeholder="?고쁺 ?댁슜???낅젰?섏꽭?? className="flex-1 px-6 py-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-primary rounded-2xl outline-none font-medium" />
+                    <button onClick={handleAddHistory} className="px-8 py-4 bg-primary text-white rounded-2xl font-bold whitespace-nowrap shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform">異붽??섍린</button>
                   </div>
                 </div>
                 
                 <div className="bg-white p-8 rounded-[40px] shadow-sm border border-gray-100 space-y-6">
-                  <h3 className="text-xl font-bold">학교 연혁 목록</h3>
+                  <h3 className="text-xl font-bold">?숆탳 ?고쁺 紐⑸줉</h3>
                   <div className="space-y-4">
                     {histories.map(h => (
                       <div key={h.id} className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 p-6 bg-gray-50 rounded-[24px] hover:bg-white border-2 border-transparent hover:border-gray-100 transition-all shadow-sm">
@@ -546,3 +546,4 @@ const AdminDashboard = () => {
 }
 
 export default AdminDashboard
+
