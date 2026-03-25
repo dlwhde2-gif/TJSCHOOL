@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react'
-import { Plus, Trash2, Save, LogOut, Image as ImageIcon, Settings, Bell, Users, Loader2, Check, X, LayoutDashboard } from 'lucide-react'
+import { Plus, Trash2, Save, LogOut, Image as ImageIcon, Settings, Bell, Users, Loader2, Check, X, LayoutDashboard, Calendar } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { getSupabase } from '@/lib/supabase'
@@ -12,6 +12,8 @@ const AdminDashboard = () => {
   const [subHeroes, setSubHeroes] = useState([]) 
   const [users, setUsers] = useState([])
   const [userSearchTerm, setUserSearchTerm] = useState('')
+  const [histories, setHistories] = useState([])
+  const [newHistory, setNewHistory] = useState({ year: new Date().getFullYear(), month: 1, content: '' })
   const [isLoading, setIsLoading] = useState(false)
   const [adminUser, setAdminUser] = useState(null)
   const router = useRouter()
@@ -41,8 +43,12 @@ const AdminDashboard = () => {
     setIsLoading(true)
     try {
       if (activeTab === 'dashboard' || activeTab === 'popups') {
-        const { data } = await supabase.from('popups').select('*').order('createdAt', { ascending: false })
-        setPopups(data || [])
+        const { data: pops } = await supabase.from('popups').select('*').order('createdAt', { ascending: false })
+        setPopups(pops || [])
+      }
+      if (activeTab === 'dashboard' || activeTab === 'history') {
+        const { data: hists } = await supabase.from('histories').select('*').order('year', { ascending: false }).order('month', { ascending: false })
+        setHistories(hists || [])
       }
       if (activeTab === 'dashboard' || activeTab === 'heroes') {
         const { data } = await supabase.from('settings').select('*').eq('key', 'heroImages').maybeSingle()
@@ -123,12 +129,31 @@ const AdminDashboard = () => {
     } catch (err) { window.alert(err.message) }
   }
 
+  const handleAddHistory = async () => {
+    try {
+      await supabase.from('histories').insert(newHistory)
+      window.alert('연혁이 추가되었습니다.')
+      setNewHistory({ year: new Date().getFullYear(), month: 1, content: '' })
+      fetchData()
+    } catch (err) { window.alert(err.message) }
+  }
+
+  const handleDeleteHistory = async (id) => {
+    if (!window.confirm('정말 삭제하시겠습니까?')) return
+    try {
+      await supabase.from('histories').delete().eq('id', id)
+      fetchData()
+    } catch (err) { window.alert(err.message) }
+  }
+
+  if (isLoading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin text-primary" size={48} /></div>
+
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-gray-100 flex flex-col p-6 space-y-8 hidden md:flex">
         <Link href="/" className="flex items-center space-x-2 px-2">
-          <img src="/logo.png" className="w-8 h-8 object-contain" alt="Logo" />
+          <img src="/TJPROJECT%20LOGO.png" className="h-8 w-auto object-contain" alt="Logo" />
           <span className="font-black text-primary text-xl tracking-tighter">TJSCHOOL</span>
         </Link>
         <nav className="flex-1 space-y-2">
@@ -147,6 +172,9 @@ const AdminDashboard = () => {
            <button onClick={() => setActiveTab('subheroes')} className={`w-full flex items-center space-x-3 p-3 rounded-xl font-bold transition-all ${activeTab === 'subheroes' ? 'bg-primary/5 text-primary' : 'text-gray-400 hover:bg-gray-50'}`}>
              <Settings size={20} /> <span>서브 히어로</span>
            </button>
+           <button onClick={() => setActiveTab('history')} className={`w-full flex items-center space-x-3 p-3 rounded-xl font-bold transition-all ${activeTab === 'history' ? 'bg-primary/5 text-primary' : 'text-gray-400 hover:bg-gray-50'}`}>
+             <Calendar size={20} /> <span>학교 연혁 관리</span>
+           </button>
            <hr className="my-4 border-gray-50" />
            <Link href="/community/notice" className="w-full flex items-center space-x-3 p-3 text-gray-400 hover:bg-gray-50 rounded-xl transition-all">
              <Settings size={20} /> <span>홈페이지 관리</span>
@@ -161,16 +189,15 @@ const AdminDashboard = () => {
             {activeTab === 'users' && '회원 승인 관리'}
             {activeTab === 'popups' && '팝업 관리'}
             {activeTab === 'heroes' && '메인 히어로 관리'}
+            {activeTab === 'subheroes' && '서브 히어로 관리'}
+            {activeTab === 'history' && '학교 연혁 관리'}
           </h1>
           <button onClick={() => { localStorage.removeItem('user'); router.push('/') }} className="flex items-center text-sm font-bold text-gray-400 hover:text-red-500 transition-colors">
             <LogOut size={18} className="mr-2" /> 로그아웃
           </button>
         </div>
 
-        {isLoading ? (
-          <div className="flex items-center justify-center py-20"><Loader2 className="animate-spin text-primary" size={40} /></div>
-        ) : (
-          <div className="space-y-10">
+        <div className="space-y-10">
             {/* Dashboard View */}
             {activeTab === 'dashboard' && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -476,8 +503,43 @@ const AdminDashboard = () => {
                 </div>
               </div>
             )}
+
+            {/* History Tab */}
+            {activeTab === 'history' && (
+              <div className="space-y-8">
+                <div className="bg-white p-8 rounded-[40px] shadow-sm border border-gray-100 space-y-6">
+                  <h3 className="text-xl font-bold">학교 연혁 추가</h3>
+                  <div className="flex flex-col md:flex-row gap-4">
+                    <input type="number" value={newHistory.year} onChange={e => setNewHistory({...newHistory, year: e.target.value})} placeholder="연도 (예: 2024)" className="px-6 py-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-primary rounded-2xl outline-none w-32 font-bold text-center" />
+                    <input type="number" min="1" max="12" value={newHistory.month} onChange={e => setNewHistory({...newHistory, month: e.target.value})} placeholder="월" className="px-6 py-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-primary rounded-2xl outline-none w-24 font-bold text-center" />
+                    <input type="text" value={newHistory.content} onChange={e => setNewHistory({...newHistory, content: e.target.value})} placeholder="연혁 내용을 입력하세요" className="flex-1 px-6 py-4 bg-gray-50 border-2 border-transparent focus:bg-white focus:border-primary rounded-2xl outline-none font-medium" />
+                    <button onClick={handleAddHistory} className="px-8 py-4 bg-primary text-white rounded-2xl font-bold whitespace-nowrap shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform">추가하기</button>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-8 rounded-[40px] shadow-sm border border-gray-100 space-y-6">
+                  <h3 className="text-xl font-bold">학교 연혁 목록</h3>
+                  <div className="space-y-4">
+                    {histories.map(h => (
+                      <div key={h.id} className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 p-6 bg-gray-50 rounded-[24px] hover:bg-white border-2 border-transparent hover:border-gray-100 transition-all shadow-sm">
+                        <div className="flex-shrink-0 flex items-center justify-center w-24 bg-white py-3 rounded-xl shadow-sm text-primary font-black">
+                          {h.year}.{h.month.toString().padStart(2, '0')}
+                        </div>
+                        <input value={h.content} onChange={async (e) => {
+                          const val = e.target.value
+                          setHistories(histories.map(item => item.id === h.id ? {...item, content: val} : item))
+                          await supabase.from('histories').update({ content: val }).eq('id', h.id)
+                        }} className="flex-1 bg-transparent border-b border-transparent focus:border-primary px-4 py-2 outline-none font-medium text-gray-700" />
+                        <button onClick={() => handleDeleteHistory(h.id)} className="p-3 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 transition-colors shrink-0 self-end md:self-auto">
+                          <Trash2 size={20} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-        )}
       </main>
     </div>
   )

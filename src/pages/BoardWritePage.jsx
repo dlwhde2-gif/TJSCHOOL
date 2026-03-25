@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import SubPageLayout from '@/components/SubPageLayout'
 import { Save, X, Image as ImageIcon, Loader2 } from 'lucide-react'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { getSupabase } from '@/lib/supabase'
 
 const BoardWritePage = ({ mainCategory, subCategory, navItems }) => {
@@ -12,10 +12,12 @@ const BoardWritePage = ({ mainCategory, subCategory, navItems }) => {
     isNotice: false
   })
   const [imageFile, setImageFile] = useState(null)
+  const [existingPost, setExistingPost] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useState(null)
   const router = useRouter()
-  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const editId = searchParams.get('edit')
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user')
@@ -25,6 +27,24 @@ const BoardWritePage = ({ mainCategory, subCategory, navItems }) => {
       router.push('/login')
     }
   }, [])
+
+  useEffect(() => {
+    if (editId) {
+      const fetchPost = async () => {
+        const supabase = getSupabase()
+        const { data, error } = await supabase.from('posts').select('*').eq('id', editId).single()
+        if (data && !error) {
+          setFormData({
+            title: data.title,
+            content: data.content,
+            isNotice: data.isNotice || false
+          })
+          setExistingPost(data)
+        }
+      }
+      fetchPost()
+    }
+  }, [editId])
 
   const handleSave = async (e) => {
     e.preventDefault()
@@ -52,9 +72,13 @@ const BoardWritePage = ({ mainCategory, subCategory, navItems }) => {
         if (uploadError) throw uploadError
         const { data: { publicUrl } } = supabase.storage.from('yujung-storage').getPublicUrl(filePath)
         fileUrl = publicUrl
+      } else if (existingPost) {
+        fileUrl = existingPost.image
+        fileName = existingPost.fileName
+        fileType = existingPost.fileType
       }
 
-      const { error: insertError } = await supabase.from('posts').insert({
+      const payload = {
         title: formData.title,
         content: formData.content,
         author: user.name,
@@ -63,11 +87,20 @@ const BoardWritePage = ({ mainCategory, subCategory, navItems }) => {
         image: fileUrl,
         fileName: fileName,
         fileType: fileType,
-        date: new Date().toISOString().split('T')[0],
-        createdAt: new Date().toISOString()
-      })
+        date: existingPost ? existingPost.date : new Date().toISOString().split('T')[0],
+      }
+      
+      if (!existingPost) {
+        payload.createdAt = new Date().toISOString()
+      }
 
-      if (insertError) throw insertError
+      const query = editId
+        ? supabase.from('posts').update(payload).eq('id', editId)
+        : supabase.from('posts').insert(payload)
+
+      const { error: saveError } = await query
+
+      if (saveError) throw saveError
 
       window.alert('작성되었습니다.')
       router.back()
@@ -82,7 +115,7 @@ const BoardWritePage = ({ mainCategory, subCategory, navItems }) => {
     <SubPageLayout mainCategory={mainCategory} subCategory={subCategory} navItems={navItems}>
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-[40px] shadow-2xl p-8 md:p-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8">글쓰기</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-8">{editId ? '글 수정하기' : '글쓰기'}</h2>
           <form onSubmit={handleSave} className="space-y-6">
             <div className="space-y-2">
               <label className="text-sm font-bold text-gray-700 ml-4">제목</label>

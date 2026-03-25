@@ -61,7 +61,7 @@ const LoginPage = () => {
       <div className="max-w-md w-full bg-white rounded-[40px] shadow-2xl p-8 md:p-12">
         <div className="text-center mb-10">
           <Link href="/" className="inline-flex items-center space-x-2 group mb-6">
-            <img src="/logo.png" alt="TJSCHOOL Logo" className="w-12 h-12 object-contain group-hover:scale-110 transition-transform" />
+            <img src="/TJPROJECT%20LOGO.png" alt="TJSCHOOL Logo" className="h-12 w-auto object-contain group-hover:scale-110 transition-transform" />
             <span className="text-2xl font-bold text-primary tracking-tighter">TJSCHOOL</span>
           </Link>
           <h2 className="text-3xl font-bold text-gray-800">로그인</h2>

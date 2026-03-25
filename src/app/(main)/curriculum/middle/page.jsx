@@ -7,6 +7,7 @@ export default function MiddlePage() {
     { name: '초등과정', path: '/curriculum/elementary' },
     { name: '중등과정', path: '/curriculum/middle' },
     { name: '언어/방과후', path: '/curriculum/language' },
+    { name: '학사일정', path: '/curriculum/calendar' },
   ]
 
   return (

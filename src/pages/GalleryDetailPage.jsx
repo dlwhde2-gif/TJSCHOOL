@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react'
 import SubPageLayout from '@/components/SubPageLayout'
-import { Calendar, Eye, User, ArrowLeft, Trash2, Camera } from 'lucide-react'
+import { Calendar, Eye, User, ArrowLeft, Trash2, Camera, Edit } from 'lucide-react'
 import { useRouter, usePathname, useParams } from 'next/navigation'
 import { getSupabase } from '@/lib/supabase'
 
@@ -91,6 +91,12 @@ const GalleryDetailPage = ({ mainCategory, subCategory, navItems }) => {
 
           {isAuthor && (
             <div className="p-8 bg-gray-50 flex justify-end space-x-4">
+              <button 
+                onClick={() => router.push(`${window.location.pathname.replace(id, '')}write?edit=${id}`)}
+                className="flex items-center px-6 py-3 text-primary hover:bg-primary/10 rounded-2xl font-bold transition-all"
+              >
+                <Edit size={20} className="mr-2" /> 수정하기
+              </button>
               <button 
                 onClick={handleDelete}
                 className="flex items-center px-6 py-3 text-red-500 hover:bg-red-50 rounded-2xl font-bold transition-all"

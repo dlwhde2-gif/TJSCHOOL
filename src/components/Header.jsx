@@ -56,6 +56,7 @@ const Header = () => {
         { name: '초등과정', path: '/curriculum/elementary' },
         { name: '중등과정', path: '/curriculum/middle' },
         { name: '방과후학교', path: '/curriculum/language' },
+        { name: '학사일정', path: '/curriculum/calendar' },
       ]
     },
     { 
@@ -90,9 +91,7 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="relative w-12 h-12">
-              <img src="/logo.png" alt="TJSCHOOL Logo" className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
-            </div>
+            <img src="/TJPROJECT%20LOGO.png" alt="TJSCHOOL Logo" className="h-10 md:h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-500" />
             <div className="flex flex-col">
               <span className={`text-2xl font-black tracking-tighter transition-colors ${headerStyle ? 'text-primary' : 'text-white'}`}>TJSCHOOL</span>
               <span className={`text-[10px] font-bold tracking-[0.2em] uppercase ${headerStyle ? 'text-gray-400' : 'text-white/60'}`}>Global Campus</span>

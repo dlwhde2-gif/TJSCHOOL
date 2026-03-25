@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
           <div className="space-y-8">
             <Link href="/" className="flex items-center space-x-3 group">
-              <img src="/logo.png" alt="TJSCHOOL Logo" className="w-12 h-12 object-contain" />
+              <img src="/TJPROJECT%20LOGO.png" alt="TJSCHOOL Logo" className="h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
               <span className="text-2xl font-black text-white tracking-tighter">TJSCHOOL</span>
             </Link>
             <p className="text-gray-400 leading-relaxed">

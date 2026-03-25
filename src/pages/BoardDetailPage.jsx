@@ -93,6 +93,12 @@ const BoardDetailPage = ({ mainCategory, subCategory, navItems }) => {
           {(isAuthor || user?.role === 'admin') && (
             <div className="p-8 bg-gray-50 flex justify-end space-x-4">
               <button 
+                onClick={() => router.push(`${window.location.pathname.replace(id, '')}write?edit=${id}`)}
+                className="flex items-center px-6 py-3 text-primary hover:bg-primary/10 rounded-2xl font-bold transition-all"
+              >
+                <Edit size={20} className="mr-2" /> 수정하기
+              </button>
+              <button 
                 onClick={handleDelete}
                 className="flex items-center px-6 py-3 text-red-500 hover:bg-red-50 rounded-2xl font-bold transition-all"
               >

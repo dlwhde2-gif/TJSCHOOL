@@ -2,16 +2,18 @@
 import React, { useState, useEffect } from 'react'
 import SubPageLayout from '@/components/SubPageLayout'
 import { Save, X, Camera, Loader2 } from 'lucide-react'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { getSupabase } from '@/lib/supabase'
 
 const GalleryWritePage = ({ mainCategory, subCategory, navItems }) => {
   const [title, setTitle] = useState('')
   const [imageFile, setImageFile] = useState(null)
+  const [existingPost, setExistingPost] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useState(null)
   const router = useRouter()
-  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const editId = searchParams.get('edit')
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user')
@@ -22,39 +24,67 @@ const GalleryWritePage = ({ mainCategory, subCategory, navItems }) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (editId) {
+      const fetchPost = async () => {
+        const supabase = getSupabase()
+        const { data, error } = await supabase.from('posts').select('*').eq('id', editId).single()
+        if (data && !error) {
+          setTitle(data.title)
+          setExistingPost(data)
+        }
+      }
+      fetchPost()
+    }
+  }, [editId])
+
   const handleSave = async (e) => {
     e.preventDefault()
-    if (!title || !imageFile) return window.alert('제목과 이미지를 선택해주세요.')
+    if (!title || (!imageFile && !existingPost)) return window.alert('제목과 이미지를 선택해주세요.')
     
     setIsLoading(true)
     const supabase = getSupabase()
 
     try {
-      // 1. Image Upload
-      const fileExt = imageFile.name.split('.').pop()
-      const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`
-      const filePath = `gallery/${fileName}`
+      let publicUrl = null
 
-      const { error: uploadError } = await supabase.storage
-        .from('yujung-storage')
-        .upload(filePath, imageFile)
+      if (imageFile) {
+        const fileExt = imageFile.name.split('.').pop()
+        const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`
+        const filePath = `gallery/${fileName}`
 
-      if (uploadError) throw uploadError
+        const { error: uploadError } = await supabase.storage
+          .from('yujung-storage')
+          .upload(filePath, imageFile)
 
-      const { data: { publicUrl } } = supabase.storage.from('yujung-storage').getPublicUrl(filePath)
+        if (uploadError) throw uploadError
 
-      // 2. Insert to Galleries table
-      const { error: insertError } = await supabase.from('posts').insert({
+        const { data } = supabase.storage.from('yujung-storage').getPublicUrl(filePath)
+        publicUrl = data.publicUrl
+      } else if (existingPost) {
+        publicUrl = existingPost.image
+      }
+
+      const payload = {
         title,
         content: title, // Posts table requires content, so using title as placeholder
         image: publicUrl,
         author: user.name,
         boardType: subCategory,
-        date: new Date().toISOString().split('T')[0],
-        createdAt: new Date().toISOString()
-      })
+        date: existingPost ? existingPost.date : new Date().toISOString().split('T')[0],
+      }
+      
+      if (!existingPost) {
+        payload.createdAt = new Date().toISOString()
+      }
 
-      if (insertError) throw insertError
+      const query = editId
+        ? supabase.from('posts').update(payload).eq('id', editId)
+        : supabase.from('posts').insert(payload)
+
+      const { error: saveError } = await query
+
+      if (saveError) throw saveError
 
       window.alert('사진이 등록되었습니다.')
       router.back()
@@ -69,7 +99,7 @@ const GalleryWritePage = ({ mainCategory, subCategory, navItems }) => {
     <SubPageLayout mainCategory={mainCategory} subCategory={subCategory} navItems={navItems}>
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-[40px] shadow-2xl p-8 md:p-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8">사진 등록하기</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-8">{editId ? '사진 수정하기' : '사진 등록하기'}</h2>
           <form onSubmit={handleSave} className="space-y-8">
             <div className="space-y-2">
               <label className="text-sm font-bold text-gray-700 ml-4">제목</label>
