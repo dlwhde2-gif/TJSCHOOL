@@ -44,10 +44,12 @@ const GalleryWritePage = ({ mainCategory, subCategory, navItems }) => {
       const { data: { publicUrl } } = supabase.storage.from('yujung-storage').getPublicUrl(filePath)
 
       // 2. Insert to Galleries table
-      const { error: insertError } = await supabase.from('galleries').insert({
+      const { error: insertError } = await supabase.from('posts').insert({
         title,
+        content: title, // Posts table requires content, so using title as placeholder
         image: publicUrl,
         author: user.name,
+        boardType: subCategory,
         date: new Date().toISOString().split('T')[0],
         createdAt: new Date().toISOString()
       })

@@ -22,11 +22,11 @@ const GalleryDetailPage = ({ mainCategory, subCategory, navItems }) => {
     const fetchItem = async () => {
       const supabase = getSupabase()
       try {
-        const { data, error } = await supabase.from('galleries').select('*').eq('id', id).single()
+        const { data, error } = await supabase.from('posts').select('*').eq('id', id).single()
         if (error) throw error
         setItem(data)
         // Increment views
-        await supabase.from('galleries').update({ views: (data.views || 0) + 1 }).eq('id', id)
+        await supabase.from('posts').update({ views: (data.views || 0) + 1 }).eq('id', id)
       } catch (err) {
         console.error('갤러리 불러오기 에러:', err)
       } finally {
@@ -40,7 +40,7 @@ const GalleryDetailPage = ({ mainCategory, subCategory, navItems }) => {
     if (!window.confirm('정말 삭제하시겠습니까?')) return
     const supabase = getSupabase()
     try {
-      const { error } = await supabase.from('galleries').delete().eq('id', id)
+      const { error } = await supabase.from('posts').delete().eq('id', id)
       if (error) throw error
       window.alert('삭제되었습니다.')
       router.back()

@@ -1,6 +1,7 @@
+'use client';
 import React from 'react'
 import SubPageLayout from '@/components/SubPageLayout'
-import { Languages, Users, Palette, Music } from 'lucide-react'
+import { Languages, Users, Palette, Music, Cpu, Trophy, BookMarked, ArrowRight } from 'lucide-react'
 
 export default function LanguagePage() {
   const navItems = [
@@ -9,48 +10,115 @@ export default function LanguagePage() {
     { name: '언어/방과후', path: '/curriculum/language' },
   ]
 
-  const programs = [
-    { icon: <Languages />, title: '다국어 프로그램', desc: '중국어, 스페인어 등 제2외국어 기초 습득' },
-    { icon: <Palette />, title: '창의 예술 클럽', desc: '미술, 디지털 드로잉 등 다양한 예술 활동' },
-    { icon: <Music />, title: '필하모닉 오케스트라', desc: '수준별 악기 지도 및 정기 연주회 개최' },
-    { icon: <Users />, title: '스포츠 리더십', desc: '축구, 테니스 등을 통한 협동심과 근성 함양' },
+  const programCategories = [
+    {
+      title: 'Global Language',
+      icon: <Languages size={32} />,
+      color: 'bg-blue-50 text-blue-600',
+      programs: ['입문 중국어', '실용 스페인어', '영어 토론 클럽', '다문화 이해 교실']
+    },
+    {
+      title: 'Arts & Culture',
+      icon: <Music size={32} />,
+      color: 'bg-purple-50 text-purple-600',
+      programs: ['오케스트라', '창의 현대 미술', 'K-Pop 댄스', '도예 교실']
+    },
+    {
+      title: 'Active Sports',
+      icon: <Trophy size={32} />,
+      color: 'bg-orange-50 text-orange-600',
+      programs: ['유소년 축구', '방과후 테니스', '태권도 품새', '뉴스포츠']
+    },
+    {
+      title: 'Future Tech',
+      icon: <Cpu size={32} />,
+      color: 'bg-emerald-50 text-emerald-600',
+      programs: ['엔트리 코딩', '로봇 공학', 'AI 데이터 활용', '3D 프린팅']
+    }
   ]
 
   return (
     <SubPageLayout mainCategory="교육과정" subCategory="언어/방과후" navItems={navItems}>
-      <div className="max-w-5xl mx-auto py-12">
-        <div className="text-center mb-16">
-          <h3 className="text-3xl font-black text-gray-800 mb-6 underline decoration-yellow-400 decoration-8 underline-offset-8">방과후 학교 프로그램</h3>
-          <p className="text-xl text-gray-500 font-medium leading-relaxed">
-            정규 교육과정을 넘어 학생 개개인의 재능을 꽃피우는 풍성한 심화 활동입니다.<br />
-            TJSCHOOL은 학생들의 다채로운 꿈을 지원하기 위해 매 학기 새로운 프로그램을 개설합니다.
+      <div className="max-w-6xl mx-auto py-12">
+        {/* Intro */}
+        <div className="text-center mb-24">
+          <h3 className="text-4xl md:text-5xl font-black text-gray-900 mb-8 leading-tight">
+            방과후 학교<br />
+            <span className="text-secondary">재능 발견의 즐거움</span>
+          </h3>
+          <p className="max-w-3xl mx-auto text-xl text-gray-500 font-medium leading-relaxed">
+            학생들의 숨겨진 잠재력을 깨우고 다채로운 경험을 선사하는<br />
+            TJSCHOOL만의 수준별 방과후 프로그램을 소개합니다.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-          {programs.map((p, i) => (
-            <div key={i} className="p-8 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all group">
-              <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white mb-6 transition-colors">
-                {p.icon}
+        {/* Program Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-28">
+          {programCategories.map((cat, i) => (
+            <div key={i} className="bg-white rounded-[48px] p-10 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center gap-6 mb-10">
+                <div className={`w-20 h-20 ${cat.color} rounded-3xl flex items-center justify-center shrink-0`}>
+                  {cat.icon}
+                </div>
+                <h4 className="text-2xl font-bold text-gray-800">{cat.title}</h4>
               </div>
-              <h4 className="text-xl font-bold text-gray-800 mb-2">{p.title}</h4>
-              <p className="text-gray-500 text-sm leading-relaxed">{p.desc}</p>
+              <div className="grid grid-cols-2 gap-4">
+                {cat.programs.map((p, idx) => (
+                  <div key={idx} className="bg-gray-50 p-4 rounded-2xl text-gray-600 font-bold text-sm flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-gray-300 rounded-full" /> {p}
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
 
-        <div className="bg-gray-900 rounded-[40px] p-12 overflow-hidden relative">
-           <div className="relative z-10">
-              <h4 className="text-2xl font-black text-white mb-4">현재 방과후 수강 신청 기간입니다.</h4>
-              <p className="text-white/60 mb-10">2026학년도 1학기 방과후 학교 수강 신청이 진행 중입니다. </p>
-              <button className="bg-secondary text-primary px-10 py-5 rounded-2xl font-black hover:scale-105 transition-all">
-                수강 신청 바로가기
-              </button>
-           </div>
-           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
-           <div className="absolute bottom-0 left-0 w-32 h-32 bg-secondary/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl" />
+        {/* Timeline/Info */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-28">
+          <div className="lg:col-span-2 bg-gray-50 rounded-[48px] p-12">
+            <h4 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <BookMarked className="text-primary" /> 운영 안내 및 일정
+            </h4>
+            <div className="space-y-8">
+              <div className="flex gap-6">
+                <div className="text-primary font-black text-xl">01</div>
+                <div>
+                  <h5 className="font-bold text-gray-800 mb-2">운영 기간</h5>
+                  <p className="text-gray-500 text-sm">각 학기별 12주 과정으로 운영 (여름/겨울방학 특강 별도)</p>
+                </div>
+              </div>
+              <div className="flex gap-6">
+                <div className="text-primary font-black text-xl">02</div>
+                <div>
+                  <h5 className="font-bold text-gray-800 mb-2">수업 시간</h5>
+                  <p className="text-gray-500 text-sm">평일 오후 15:30 ~ 17:00 (프로그램별 상이)</p>
+                </div>
+              </div>
+              <div className="flex gap-6">
+                <div className="text-primary font-black text-xl">03</div>
+                <div>
+                  <h5 className="font-bold text-gray-800 mb-2">상담 및 문의</h5>
+                  <p className="text-gray-500 text-sm">방과후 학교 지원센터 (02-123-4568)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-primary rounded-[48px] p-12 text-white flex flex-col justify-between">
+            <div>
+              <h4 className="text-2xl font-bold mb-4">수강 신청</h4>
+              <p className="text-white/60 text-sm leading-relaxed mb-8">
+                신나는 방과후 활동,<br />
+                지금 바로 신청하세요!
+              </p>
+            </div>
+            <a href="#" className="flex items-center justify-between bg-white text-primary p-6 rounded-3xl font-black group hover:bg-secondary transition-colors">
+              신청 페이지 이동 <ArrowRight className="group-hover:translate-x-2 transition-transform" />
+            </a>
+          </div>
         </div>
       </div>
     </SubPageLayout>
   )
 }
+

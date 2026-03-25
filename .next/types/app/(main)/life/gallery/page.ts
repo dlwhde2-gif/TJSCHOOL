@@ -1,4 +1,4 @@
-// File: C:\Users\dk\Desktop\onebite\anti1\src\app\(main)\life\gallery\page.jsx
+// File: C:\Users\WIN\Desktop\anti\TJSCHOOL\src\app\(main)\life\gallery\page.jsx
 import * as entry from '../../../../../../src/app/(main)/life/gallery/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

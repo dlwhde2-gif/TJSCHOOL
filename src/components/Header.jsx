@@ -65,6 +65,7 @@ const Header = () => {
         { name: '사진갤러리', path: '/life/gallery' },
         { name: '영상갤러리', path: '/life/video' },
         { name: '급식식단', path: '/life/meal' },
+        { name: '보도자료', path: '/life/news' },
       ]
     },
     { 
@@ -73,7 +74,7 @@ const Header = () => {
       subItems: [
         { name: '공지사항', path: '/community/notice' },
         { name: '가정통신문', path: '/community/letter' },
-        { name: '보도자료', path: '/community/news' },
+        { name: '각종서식', path: '/community/download' },
       ]
     },
   ]

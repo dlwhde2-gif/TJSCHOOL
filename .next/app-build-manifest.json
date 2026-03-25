@@ -1,14 +1,14 @@
 {
   "pages": {
-    "/(main)/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(main)/layout.js"
-    ],
     "/(main)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(main)/page.js"
+    ],
+    "/(main)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/layout.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -16,40 +16,55 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(main)/login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(main)/login/page.js"
-    ],
-    "/(main)/community/letter/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(main)/community/letter/page.js"
-    ],
     "/(main)/about/greetings/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(main)/about/greetings/page.js"
     ],
-    "/(main)/community/notice/page": [
+    "/(main)/about/goals/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/community/notice/page.js"
+      "static/chunks/app/(main)/about/goals/page.js"
     ],
-    "/admin/page": [
+    "/(main)/about/history/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/admin/page.js"
+      "static/chunks/app/(main)/about/history/page.js"
     ],
-    "/(main)/community/letter/write/page": [
+    "/(main)/about/map/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/community/letter/write/page.js"
+      "static/chunks/app/(main)/about/map/page.js"
     ],
-    "/(main)/community/notice/write/page": [
+    "/(main)/about/admission/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/community/notice/write/page.js"
+      "static/chunks/app/(main)/about/admission/page.js"
+    ],
+    "/(main)/about/admission/middle/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/about/admission/middle/page.js"
+    ],
+    "/(main)/about/admission/qna/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/about/admission/qna/page.js"
+    ],
+    "/(main)/curriculum/middle/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/curriculum/middle/page.js"
+    ],
+    "/(main)/curriculum/language/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/curriculum/language/page.js"
+    ],
+    "/(main)/curriculum/elementary/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/curriculum/elementary/page.js"
     ],
     "/(main)/life/gallery/page": [
       "static/chunks/webpack.js",
@@ -60,6 +75,81 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(main)/life/video/page.js"
+    ],
+    "/(main)/life/meal/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/life/meal/page.js"
+    ],
+    "/(main)/life/news/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/life/news/page.js"
+    ],
+    "/(main)/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/login/page.js"
+    ],
+    "/(main)/community/notice/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/community/notice/page.js"
+    ],
+    "/(main)/community/notice/write/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/community/notice/write/page.js"
+    ],
+    "/(main)/community/letter/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/community/letter/page.js"
+    ],
+    "/(main)/community/letter/write/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/community/letter/write/page.js"
+    ],
+    "/(main)/community/letter/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/community/letter/[id]/page.js"
+    ],
+    "/(main)/community/download/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/community/download/page.js"
+    ],
+    "/(main)/community/download/write/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/community/download/write/page.js"
+    ],
+    "/(main)/community/download/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/community/download/[id]/page.js"
+    ],
+    "/(main)/life/gallery/write/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/life/gallery/write/page.js"
+    ],
+    "/(main)/life/video/write/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/life/video/write/page.js"
+    ],
+    "/(main)/life/meal/write/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/life/meal/write/page.js"
+    ],
+    "/(main)/life/news/write/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/life/news/write/page.js"
     ]
   }
 }

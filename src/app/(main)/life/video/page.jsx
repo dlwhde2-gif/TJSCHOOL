@@ -1,4 +1,4 @@
-import BoardPage from '@/pages/BoardPage'
+import VideoPage from '@/pages/VideoPage'
 
 export default function VideoGallery() {
   const navItems = [
@@ -9,7 +9,7 @@ export default function VideoGallery() {
   ]
 
   return (
-    <BoardPage 
+    <VideoPage 
       mainCategory="학교생활" 
       subCategory="영상갤러리" 
       navItems={navItems} 

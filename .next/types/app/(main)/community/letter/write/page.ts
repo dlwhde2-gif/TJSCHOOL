@@ -1,4 +1,4 @@
-// File: C:\Users\dk\Desktop\onebite\anti1\src\app\(main)\community\letter\write\page.jsx
+// File: C:\Users\WIN\Desktop\anti\TJSCHOOL\src\app\(main)\community\letter\write\page.jsx
 import * as entry from '../../../../../../../src/app/(main)/community/letter/write/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

@@ -1,0 +1,1 @@
+ALTER TABLE galleries ADD COLUMN IF NOT EXISTS "boardType" TEXT DEFAULT '사진갤러리';

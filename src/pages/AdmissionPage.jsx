@@ -3,12 +3,13 @@ import React from 'react'
 import SubPageLayout from '@/components/SubPageLayout'
 import { FileText, Calendar, CheckCircle, Info } from 'lucide-react'
 
-const AdmissionPage = () => {
-  const navItems = [
+const AdmissionPage = ({ subCategory = "초등입학안내", navItems: propNavItems }) => {
+  const defaultNavItems = [
     { name: '초등입학안내', path: '/about/admission' },
     { name: '중등입학안내', path: '/about/admission/middle' },
     { name: '입학상담', path: '/about/admission/qna' },
   ]
+  const navItems = propNavItems || defaultNavItems;
 
   const steps = [
     { icon: <FileText />, title: '원서 접수', desc: '홈페이지 또는 방문 접수' },
@@ -17,16 +18,18 @@ const AdmissionPage = () => {
     { icon: <Info />, title: '등록 안내', desc: '입학 등록 및 오리엔테이션' },
   ]
 
+  const isMiddle = subCategory.includes('중등');
+
   return (
     <SubPageLayout 
       mainCategory="입학안내" 
-      subCategory="초등입학안내" 
+      subCategory={subCategory} 
       navItems={navItems}
     >
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-primary font-bold text-lg mb-4 tracking-widest uppercase">Admission Guide</h2>
-          <h3 className="text-4xl font-bold text-gray-800">TJSCHOOL 입학 절차 안내</h3>
+          <h3 className="text-4xl font-bold text-gray-800">TJSCHOOL {subCategory} 절차 안내</h3>
           <p className="mt-4 text-gray-500">글로벌 인재를 향한 첫 걸음, TJSCHOOL과 함께하세요.</p>
         </div>
 
@@ -50,7 +53,9 @@ const AdmissionPage = () => {
           <div className="space-y-6">
             <div className="flex bg-white p-6 rounded-2xl shadow-sm items-center justify-between">
               <span className="font-bold text-gray-700">모집 대상</span>
-              <span className="text-gray-600">초등학교 1학년 ~ 6학년</span>
+              <span className="text-gray-600">
+                {isMiddle ? '중학교 1학년 ~ 3학년' : '초등학교 1학년 ~ 6학년'}
+              </span>
             </div>
             <div className="flex bg-white p-6 rounded-2xl shadow-sm items-center justify-between">
               <span className="font-bold text-gray-700">전형 방법</span>

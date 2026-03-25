@@ -23,8 +23,9 @@ const GalleryPage = ({ mainCategory, subCategory, navItems }) => {
       const supabase = getSupabase()
       try {
         const { data, error } = await supabase
-          .from('galleries')
+          .from('posts')
           .select('*')
+          .eq('boardType', subCategory)
           .order('createdAt', { ascending: false })
         
         if (error) throw error

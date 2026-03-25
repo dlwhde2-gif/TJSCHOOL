@@ -1,6 +1,6 @@
-import BoardPage from '@/pages/BoardPage'
+import GalleryPage from '@/pages/GalleryPage'
 
-export default function SchoolMeal() {
+export default function MealPlan() {
   const navItems = [
     { name: '사진갤러리', path: '/life/gallery' },
     { name: '영상갤러리', path: '/life/video' },
@@ -9,7 +9,7 @@ export default function SchoolMeal() {
   ]
 
   return (
-    <BoardPage 
+    <GalleryPage 
       mainCategory="학교생활" 
       subCategory="급식식단" 
       navItems={navItems} 
