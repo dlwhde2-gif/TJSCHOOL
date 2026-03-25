@@ -15,7 +15,7 @@ const AdmissionSection = () => {
             <div className="absolute -top-20 -left-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
             <div className="relative rounded-[60px] overflow-hidden shadow-2xl skew-y-2 hover:skew-y-0 transition-all duration-700">
               <img 
-                src="https://images.unsplash.com/photo-1523240715632-d984bc310b91?auto=format&fit=crop&w=1200&q=80" 
+                src="/admission_students.png" 
                 alt="Students" 
                 className="w-full h-auto"
               />

@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronRight, ChevronLeft } from 'lucide-react'
-
+import Link from 'next/link'
+import { getSupabase } from '@/lib/supabase'
 const slides = [
   {
     image: '/hero1.png',
@@ -23,13 +24,37 @@ const slides = [
 
 const HeroSlider = () => {
   const [current, setCurrent] = useState(0)
+  const [currentSlides, setCurrentSlides] = useState(slides)
 
   useEffect(() => {
+    const fetchHeroes = async () => {
+      try {
+        const supabase = getSupabase()
+        const { data, error } = await supabase.from('settings').select('*').eq('key', 'heroImages').maybeSingle()
+        if (!error && data && data.value) {
+          const urls = JSON.parse(data.value)
+          if (urls.length > 0) {
+            setCurrentSlides(urls.map((url, i) => ({
+              image: url,
+              title: slides[i % slides.length].title,
+              subtitle: slides[i % slides.length].subtitle
+            })))
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load hero images', err)
+      }
+    }
+    fetchHeroes()
+  }, [])
+
+  useEffect(() => {
+    if (currentSlides.length === 0) return
     const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length)
+      setCurrent((prev) => (prev + 1) % currentSlides.length)
     }, 6000)
     return () => clearInterval(timer)
-  }, [])
+  }, [currentSlides])
 
   return (
     <section className="relative h-screen bg-gray-900 overflow-hidden">
@@ -42,7 +67,9 @@ const HeroSlider = () => {
           transition={{ duration: 1.5 }}
           className="absolute inset-0"
         >
-          <img src={slides[current].image} alt="Hero" className="w-full h-full object-cover" />
+          {currentSlides.length > 0 && (
+            <img src={currentSlides[current]?.image} alt="Hero" className="w-full h-full object-cover" />
+          )}
           <div className="absolute inset-0 bg-black/40" />
         </motion.div>
       </AnimatePresence>
@@ -56,31 +83,37 @@ const HeroSlider = () => {
           className="max-w-4xl"
         >
           <h1 className="text-white text-6xl md:text-8xl font-black leading-tight mb-8 whitespace-pre-wrap tracking-tighter">
-            {slides[current].title}
+            {currentSlides[current]?.title}
           </h1>
           <p className="text-white/80 text-xl md:text-2xl font-medium mb-12 max-w-2xl leading-relaxed">
-            {slides[current].subtitle}
+            {currentSlides[current]?.subtitle}
           </p>
           <div className="flex flex-wrap gap-6">
-            <button className="bg-primary text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl shadow-primary/30 hover:scale-105 transition-all">
+            <Link 
+              href="/about/admission"
+              className="bg-primary text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl shadow-primary/30 hover:scale-105 transition-all text-center"
+            >
               입학 안내 보기
-            </button>
-            <button className="bg-white/10 text-white backdrop-blur-md px-10 py-5 rounded-2xl font-black text-lg hover:bg-white hover:text-primary transition-all">
+            </Link>
+            <Link 
+              href="/about/greetings"
+              className="bg-white/10 text-white backdrop-blur-md px-10 py-5 rounded-2xl font-black text-lg hover:bg-white hover:text-primary transition-all text-center"
+            >
               자세히 보기
-            </button>
+            </Link>
           </div>
         </motion.div>
       </div>
 
       <div className="absolute bottom-12 right-12 z-20 flex items-center space-x-4">
         <div className="flex space-x-2">
-          {slides.map((_, i) => (
+          {currentSlides.map((_, i) => (
             <div key={i} className={`h-1.5 rounded-full transition-all duration-500 ${current === i ? 'w-12 bg-secondary' : 'w-2 bg-white/30'}`} />
           ))}
         </div>
         <div className="flex space-x-2 ml-8">
-           <button onClick={() => setCurrent((current - 1 + slides.length) % slides.length)} className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-all"><ChevronLeft /></button>
-           <button onClick={() => setCurrent((current + 1) % slides.length)} className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-all"><ChevronRight /></button>
+           <button onClick={() => setCurrent((current - 1 + currentSlides.length) % currentSlides.length)} className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-all"><ChevronLeft /></button>
+           <button onClick={() => setCurrent((current + 1) % currentSlides.length)} className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-all"><ChevronRight /></button>
         </div>
       </div>
     </section>

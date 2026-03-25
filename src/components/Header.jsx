@@ -51,11 +51,11 @@ const Header = () => {
     },
     { 
       name: '교육과정', 
-      path: '/curriculum/primary',
+      path: '/curriculum/elementary',
       subItems: [
-        { name: '초등과정', path: '/curriculum/primary' },
+        { name: '초등과정', path: '/curriculum/elementary' },
         { name: '중등과정', path: '/curriculum/middle' },
-        { name: '방과후학교', path: '/curriculum/afterschool' },
+        { name: '방과후학교', path: '/curriculum/language' },
       ]
     },
     { 

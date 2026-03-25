@@ -11,6 +11,7 @@ const AdminDashboard = () => {
   const [heroImages, setHeroImages] = useState([])
   const [subHeroes, setSubHeroes] = useState([]) 
   const [users, setUsers] = useState([])
+  const [userSearchTerm, setUserSearchTerm] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [adminUser, setAdminUser] = useState(null)
   const router = useRouter()
@@ -96,7 +97,6 @@ const AdminDashboard = () => {
   const handleAddPopup = async () => {
     try {
       const { data, error } = await supabase.from('popups').insert({
-        title: '신규 팝업',
         image: 'https://images.unsplash.com/photo-1544717297-fa154daaf76e',
         link: '#',
         isActive: true
@@ -191,22 +191,75 @@ const AdminDashboard = () => {
 
             {/* Users Tab */}
             {activeTab === 'users' && (
-              <div className="bg-white rounded-[40px] shadow-sm border border-gray-100 overflow-hidden">
-                <table className="w-full">
+              <div className="space-y-6">
+                <div className="flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-3xl shadow-sm border border-gray-100 gap-4">
+                  <input
+                    type="text"
+                    value={userSearchTerm}
+                    onChange={(e) => setUserSearchTerm(e.target.value)}
+                    placeholder="아이디, 이름, 학생이름 검색..."
+                    className="w-full md:w-80 px-5 py-3 bg-gray-50 border border-transparent focus:bg-white focus:border-primary rounded-xl outline-none font-medium transition-all"
+                  />
+                  <button
+                    onClick={() => {
+                      const headers = ['아이디', '이름', '학생이름', '역할', '승인상태']
+                      const csvData = users
+                        .filter(u => 
+                          u.username.toLowerCase().includes(userSearchTerm.toLowerCase()) || 
+                          u.name.toLowerCase().includes(userSearchTerm.toLowerCase()) || 
+                          (u.phone && u.phone.toLowerCase().includes(userSearchTerm.toLowerCase()))
+                        )
+                        .map(u => [
+                          u.username,
+                          u.name,
+                          u.phone || '',
+                          u.role,
+                          u.isApproved ? '승인완료' : '승인대기'
+                        ])
+                      
+                      const csvString = [
+                        headers.join(','),
+                        ...csvData.map(row => row.map(cell => `"${cell}"`).join(','))
+                      ].join('\n')
+                      
+                      const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' })
+                      const url = URL.createObjectURL(blob)
+                      const link = document.createElement('a')
+                      link.href = url
+                      link.setAttribute('download', `TJSCHOOL_회원목록_${new Date().toISOString().split('T')[0]}.csv`)
+                      document.body.appendChild(link)
+                      link.click()
+                      document.body.removeChild(link)
+                    }}
+                    className="w-full md:w-auto px-6 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
+                  >
+                    엑셀(CSV) 다운로드
+                  </button>
+                </div>
+                <div className="bg-white rounded-[40px] shadow-sm border border-gray-100 overflow-hidden">
+                  <table className="w-full">
                   <thead className="bg-gray-50 border-b border-gray-100">
                     <tr>
                       <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">아이디</th>
                       <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">이름</th>
+                      <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">학생이름</th>
                       <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">역할</th>
                       <th className="px-8 py-5 text-left text-sm font-bold text-gray-400">승인상태</th>
                       <th className="px-8 py-5 text-right text-sm font-bold text-gray-400">작업</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
-                    {users.map(u => (
+                    {users
+                      .filter(u => 
+                        u.username.toLowerCase().includes(userSearchTerm.toLowerCase()) || 
+                        u.name.toLowerCase().includes(userSearchTerm.toLowerCase()) || 
+                        (u.phone && u.phone.toLowerCase().includes(userSearchTerm.toLowerCase()))
+                      )
+                      .map(u => (
                       <tr key={u.username} className="hover:bg-gray-50/50 transition-colors">
                         <td className="px-8 py-6 font-bold text-gray-800">{u.username}</td>
                         <td className="px-8 py-6 text-gray-600 font-medium">{u.name}</td>
+                        <td className="px-8 py-6 text-gray-600 font-medium">{u.phone || '-'}</td>
                         <td className="px-8 py-6"><span className={`px-3 py-1 rounded-full text-xs font-bold ${u.role === 'admin' ? 'bg-red-50 text-red-500' : 'bg-blue-50 text-blue-500'}`}>{u.role}</span></td>
                         <td className="px-8 py-6">
                           <span className={`px-3 py-1 rounded-full text-xs font-bold ${u.isApproved ? 'bg-green-50 text-green-500' : 'bg-orange-50 text-orange-500'}`}>
@@ -226,6 +279,7 @@ const AdminDashboard = () => {
                   </tbody>
                 </table>
               </div>
+            </div>
             )}
 
             {/* Popups Tab */}
@@ -240,11 +294,7 @@ const AdminDashboard = () => {
                       <img src={p.image} className="w-full h-full object-cover" />
                     </div>
                     <div className="space-y-4">
-                      <input value={p.title} onChange={async (e) => {
-                        const val = e.target.value
-                        setPopups(popups.map(item => item.id === p.id ? {...item, title: val} : item))
-                        await supabase.from('popups').update({ title: val }).eq('id', p.id)
-                      }} className="w-full bg-gray-50 px-6 py-3 rounded-xl border border-transparent focus:bg-white focus:border-primary outline-none font-bold" placeholder="팝업 제목" />
+
                       <div className="flex flex-col gap-2">
                          <input 
                            type="file"
@@ -304,16 +354,48 @@ const AdminDashboard = () => {
                       <div className="aspect-[16/9] rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-white">
                         <img src={url} className="w-full h-full object-cover" onError={(e) => e.target.src = 'https://via.placeholder.com/400x225?text=Invalid+URL'} />
                       </div>
-                      <input 
-                        value={url} 
-                        onChange={(e) => {
-                          const next = [...heroImages]
-                          next[i] = e.target.value
-                          setHeroImages(next)
-                        }}
-                        className="w-full bg-transparent p-2 text-xs text-gray-400 outline-none truncate"
-                        placeholder="이미지 URL 입력"
-                      />
+                      <div className="flex flex-col gap-2 mt-2">
+                        <input 
+                          type="file"
+                          accept="image/*"
+                          id={`hero-upload-${i}`}
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files[0]
+                            if (!file) return
+                            setIsLoading(true)
+                            try {
+                              const ext = file.name.split('.').pop()
+                              const randomStr = Math.random().toString(36).substring(2, 8)
+                              const path = `heroes/main_${Date.now()}_${randomStr}.${ext}`
+                              const { error: upErr } = await supabase.storage.from('yujung-storage').upload(path, file)
+                              if (upErr) throw upErr
+                              const { data: { publicUrl } } = supabase.storage.from('yujung-storage').getPublicUrl(path)
+                              const next = [...heroImages]
+                              next[i] = publicUrl
+                              setHeroImages(next)
+                            } catch (err) { window.alert(err.message) }
+                            finally { setIsLoading(false) }
+                          }}
+                        />
+                        <label 
+                          htmlFor={`hero-upload-${i}`}
+                          className="w-full bg-primary/5 text-primary py-2 rounded-xl text-center text-sm font-bold cursor-pointer hover:bg-primary/10 transition-all"
+                        >
+                          이미지 업로드
+                        </label>
+                        <input 
+                          value={url} 
+                          onChange={(e) => {
+                            const next = [...heroImages]
+                            next[i] = e.target.value
+                            setHeroImages(next)
+                          }}
+                          className="w-full bg-white border border-gray-100 p-2 rounded-xl text-xs text-gray-500 outline-none truncate"
+                          placeholder="또는 이미지 URL 직접 입력"
+                        />
+                      </div>
+
                       <button onClick={() => setHeroImages(heroImages.filter((_, idx) => idx !== i))} className="absolute top-2 right-2 bg-white/90 text-red-500 p-2 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"><Trash2 size={16} /></button>
                     </div>
                   ))}
@@ -351,7 +433,8 @@ const AdminDashboard = () => {
                               setIsLoading(true)
                               try {
                                 const ext = file.name.split('.').pop()
-                                const path = `heroes/sub_${cat}_${Date.now()}.${ext}`
+                                const randomStr = Math.random().toString(36).substring(2, 8)
+                                const path = `heroes/sub_${Date.now()}_${randomStr}.${ext}`
                                 const { error: upErr } = await supabase.storage.from('yujung-storage').upload(path, file)
                                 if (upErr) throw upErr
                                 

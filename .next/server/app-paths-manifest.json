@@ -1,8 +1,7 @@
 {
-  "/(main)/community/notice/page": "app/(main)/community/notice/page.js",
-  "/(main)/community/letter/page": "app/(main)/community/letter/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/(main)/community/download/write/page": "app/(main)/community/download/write/page.js",
+  "/(main)/page": "app/(main)/page.js",
   "/(main)/community/download/page": "app/(main)/community/download/page.js",
-  "/(main)/about/greetings/page": "app/(main)/about/greetings/page.js",
-  "/(main)/life/news/page": "app/(main)/life/news/page.js",
-  "/(main)/page": "app/(main)/page.js"
+  "/(main)/community/notice/page": "app/(main)/community/notice/page.js"
 }

@@ -9,10 +9,8 @@ const RegisterPage = () => {
   const [formData, setFormData] = useState({
     id: '',
     password: '',
-    confirmPassword: '',
     name: '',
-    phone: '',
-    department: '초등과정'
+    studentName: ''
   })
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
@@ -45,10 +43,10 @@ const RegisterPage = () => {
           username: formData.id,
           name: formData.name,
           password: formData.password,
-          phone: formData.phone,
+          phone: formData.studentName, // Store student name in the existing phone column to avoid DB migrations
           role: 'user',
           isApproved: false,
-          created_at: new Date().toISOString()
+          createdAt: new Date().toISOString()
         })
 
       if (insertError) throw insertError
@@ -138,21 +136,6 @@ const RegisterPage = () => {
             </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-700 ml-4">전화번호</label>
-            <div className="relative">
-              <Phone className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-              <input 
-                type="tel"
-                required
-                value={formData.phone}
-                onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                className="w-full pl-14 pr-6 py-4 bg-gray-50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl outline-none transition-all"
-                placeholder="010-0000-0000"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-2">
             <label className="text-sm font-bold text-gray-700 ml-4">비밀번호</label>
             <div className="relative">
               <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
@@ -162,8 +145,23 @@ const RegisterPage = () => {
                 value={formData.password}
                 onChange={(e) => setFormData({...formData, password: e.target.value})}
                 className="w-full pl-14 pr-6 py-4 bg-gray-50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl outline-none transition-all"
-                placeholder="8자 이상 입력해주세요"
-                minLength={8}
+                placeholder="4자 이상 입력해주세요"
+                minLength={4}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-bold text-gray-700 ml-4">학생 이름</label>
+            <div className="relative">
+              <User className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <input 
+                type="text"
+                required
+                value={formData.studentName}
+                onChange={(e) => setFormData({...formData, studentName: e.target.value})}
+                className="w-full pl-14 pr-6 py-4 bg-gray-50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl outline-none transition-all"
+                placeholder="학생 실명을 입력해주세요"
               />
             </div>
           </div>

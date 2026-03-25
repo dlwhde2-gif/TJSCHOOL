@@ -9,7 +9,7 @@ const QuickMenu = () => {
   const items = [
     { icon: <Calendar />, label: '학사일정', path: '/curriculum/calendar' },
     { icon: <CheckCircle />, label: '입학안내', path: '/about/admission' },
-    { icon: <GraduationCap />, label: '교육과정', path: '/curriculum/primary' },
+    { icon: <GraduationCap />, label: '교육과정', path: '/curriculum/elementary' },
     { icon: <Phone />, label: '입학상담', path: '/about/admission/qna' }
   ]
 

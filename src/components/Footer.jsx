@@ -27,8 +27,14 @@ const Footer = () => {
           <div className="space-y-8">
             <h4 className="text-xl font-bold">Quick Links</h4>
             <ul className="space-y-4">
-              {['학교소개', '입학안내', '교육과정', '학교생활', '커뮤니티'].map((item) => (
-                <li key={item}><Link href="#" className="text-gray-400 hover:text-white transition-colors">{item}</Link></li>
+              {[
+                { name: '학교소개', path: '/about/greetings' },
+                { name: '입학안내', path: '/about/admission' },
+                { name: '교육과정', path: '/curriculum/elementary' },
+                { name: '학교생활', path: '/life/gallery' },
+                { name: '커뮤니티', path: '/community/notice' }
+              ].map((item) => (
+                <li key={item.name}><Link href={item.path} className="text-gray-400 hover:text-white transition-colors">{item.name}</Link></li>
               ))}
             </ul>
           </div>

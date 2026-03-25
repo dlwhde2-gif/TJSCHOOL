@@ -97,7 +97,7 @@ const BoardPage = ({ mainCategory, subCategory, navItems }) => {
                   </td>
                 </tr>
               ) : (
-                posts.map((post) => (
+                posts.map((post, index) => (
                   <tr 
                     key={post.id} 
                     onClick={() => navigate(`${currentPath}/${post.id}`)}
@@ -107,7 +107,7 @@ const BoardPage = ({ mainCategory, subCategory, navItems }) => {
                       {post.isNotice ? (
                         <span className="bg-primary text-white px-3 py-1 rounded-md text-xs font-black tracking-widest uppercase">Notice</span>
                       ) : (
-                        <span className="font-medium text-gray-400">{post.id}</span>
+                        <span className="font-medium text-gray-400">{posts.length - index}</span>
                       )}
                     </td>
                     <td className="px-6 py-6 font-bold text-gray-800 group-hover:text-primary transition-colors text-lg">
