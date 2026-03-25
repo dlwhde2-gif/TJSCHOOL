@@ -11,7 +11,7 @@ const GalleryDetailPage = ({ mainCategory, subCategory, navItems }) => {
   const [user, setUser] = useState(null)
   const router = useRouter()
   const params = useParams()
-  const id = params.id
+  const id = params?.id
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user')

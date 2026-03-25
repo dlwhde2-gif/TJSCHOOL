@@ -1,11 +1,11 @@
 'use client';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import SubPageLayout from '@/components/SubPageLayout'
 import { Save, X, Image as ImageIcon, Loader2 } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { getSupabase } from '@/lib/supabase'
 
-const BoardWritePage = ({ mainCategory, subCategory, navItems }) => {
+const BoardWriteContent = ({ mainCategory, subCategory, navItems }) => {
   const [formData, setFormData] = useState({
     title: '',
     content: '',
@@ -194,6 +194,14 @@ const BoardWritePage = ({ mainCategory, subCategory, navItems }) => {
         </div>
       </div>
     </SubPageLayout>
+  )
+}
+
+const BoardWritePage = (props) => {
+  return (
+    <Suspense fallback={<div>불러오는 중...</div>}>
+      <BoardWriteContent {...props} />
+    </Suspense>
   )
 }
 

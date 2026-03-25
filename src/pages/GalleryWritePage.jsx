@@ -1,11 +1,11 @@
 'use client';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import SubPageLayout from '@/components/SubPageLayout'
 import { Save, X, Camera, Loader2 } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { getSupabase } from '@/lib/supabase'
 
-const GalleryWritePage = ({ mainCategory, subCategory, navItems }) => {
+const GalleryWriteContent = ({ mainCategory, subCategory, navItems }) => {
   const [title, setTitle] = useState('')
   const [imageFile, setImageFile] = useState(null)
   const [existingPost, setExistingPost] = useState(null)
@@ -162,6 +162,14 @@ const GalleryWritePage = ({ mainCategory, subCategory, navItems }) => {
         </div>
       </div>
     </SubPageLayout>
+  )
+}
+
+const GalleryWritePage = (props) => {
+  return (
+    <Suspense fallback={<div>불러오는 중...</div>}>
+      <GalleryWriteContent {...props} />
+    </Suspense>
   )
 }
 
