@@ -1,2 +1,2 @@
-﻿import AdminDashboard from '@/pages/AdminDashboard'; export default function Page() { return <AdminDashboard />; }
+import AdminDashboard from '@/components/pages/AdminDashboard'; export default function Page() { return <AdminDashboard />; }
 
